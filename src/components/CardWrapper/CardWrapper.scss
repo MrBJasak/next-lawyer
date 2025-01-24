@@ -1,0 +1,38 @@
+.card_wrapper {
+  margin: -70px 0px 30px 0px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    margin: -40px 0px 20px 0px;
+  }
+}
+
+.card {
+  gap: 2rem;
+  padding: 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 80vh;
+  padding-left: 20px;
+  max-width: 1320px;
+  display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: auto;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    min-height: auto;
+  }
+}
+
+// ... (copy rest of the relevant styles from styles.scss)

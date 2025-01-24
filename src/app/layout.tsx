@@ -1,3 +1,6 @@
+'use client'
+import '../../src/styles/styles.scss';
+import { Layout } from "../components/Layout";
 const DEFAULT_LOCALE = 'PL';
 
 export default function RootLayout({
@@ -7,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={DEFAULT_LOCALE}>
-      <body>{children}</body>
+      <body><Layout>{children}</Layout></body>
     </html>
   );
 }

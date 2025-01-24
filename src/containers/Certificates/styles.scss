@@ -1,0 +1,20 @@
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px)); // zmniejszone wartości
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; // wycentrowanie siatki
+}
+
+.certificates-grid img {
+  width: 100%;
+  max-width: 300px; // dodane ograniczenie maksymalnej szerokości
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.certificates-grid img:hover {
+  transform: scale(1.5);
+  z-index: 1000;
+}

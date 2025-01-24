@@ -1,0 +1,14 @@
+$media: (
+  xsm: 400px,
+  sm: 480px,
+  md: 900px,
+  lg: 1024px,
+  xxl: 1250px,
+  xxxl: 1536px,
+);
+
+@mixin media($size) {
+  @media (min-width: map-get($media, $size)) {
+    @content;
+  }
+}

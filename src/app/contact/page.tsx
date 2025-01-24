@@ -1,3 +1,5 @@
-export default function Contact() {
-  return <div>Contact</div>;
+import { Contact } from '../../containers/Contact/Contact';
+
+export default function page() {
+  return <Contact />;
 }

@@ -1,3 +1,181 @@
-export default function Services() {
-  return <div>Services</div>;
+import { Services } from '../../containers/Services/Services';
+
+import {
+  FaBalanceScale,
+  FaBriefcase,
+  FaBuilding,
+  FaChartLine,
+  FaFileAlt,
+  FaGavel,
+  FaUsers,
+  FaUserTie,
+} from 'react-icons/fa';
+
+export const services = [
+  {
+    id: 1,
+    title: 'Porady prawne',
+    mainDescription: 'Kompleksowa obsługa prawna',
+    details: ['Porady prawne', 'Sporządzanie i opiniowanie umów'],
+    icon: <FaGavel />,
+  },
+  {
+    id: 2,
+    title: 'Prawo Cywilne',
+    mainDescription: 'Kompleksowa obsługa w zakresie prawa cywilnego',
+    details: [
+      'Reprezentowanie w sprawach sądowych',
+      'Udział w mediacjach i negocjacjach',
+      'Pozwy/wnioski/odwołania/zażalenia i inne pisma procesowe',
+      'Postępowania o zapłatę',
+      'Odszkodowania z powodu błędów medycznych',
+      'Odszkodowania z tytułu wypadków komunikacyjnych',
+      'Odszkodowania z zakresu bezumownego korzystania z nieruchomości',
+      'Ochrona prawa własności i posiadania',
+      'Ustalenie stanu prawnego nieruchomości/zasiedzenie/służebności/zniesienie współwłasności',
+      'Ochrona dóbr osobistych',
+    ],
+    icon: <FaBalanceScale />,
+  },
+  {
+    id: 3,
+    title: 'Prawo Rodzinne',
+    mainDescription: 'Wsparcie w sprawach rodzinnych i opiekuńczych',
+    details: [
+      'Rozwód/separacja',
+      'Podział majątku',
+      'Alimenty',
+      'Ustanowienie rozdzielności majątkowej',
+      'Regulacja kontaktów z dzieckiem',
+      'Ustalenie lub zaprzeczenie ojcostwa',
+      'Pozbawienie/ograniczenie władzy rodzicielskiej',
+      'Ustanowienie rodziny zastępczej',
+    ],
+    icon: <FaUsers />,
+  },
+  {
+    id: 4,
+    title: 'Prawo Spadkowe',
+    mainDescription: 'Profesjonalne doradztwo w sprawach spadkowych',
+    details: [
+      'Stwierdzenie nabycia spadku',
+      'Przyjęcie spadku',
+      'Odrzucenie spadku',
+      'Przyjęcie lub odrzucenie spadku przez małoletniego',
+      'Dział spadku',
+      'Dochodzenie zachowku',
+      'Stwierdzenie nieważności testamentu',
+    ],
+    icon: <FaFileAlt />,
+  },
+  {
+    id: 5,
+    title: 'Prawo Pracy i Ubezpieczeń Społecznych',
+    mainDescription: 'Kompleksowa obsługa prawna w zakresie prawa pracy',
+    details: [
+      'Sprawy o rozwiązanie stosunku pracy',
+      'Sprawy o mobbing i dyskryminację',
+      'Sporządzanie i opiniowanie umów o pracę',
+      'Naruszenie obowiązków pracodawcy',
+      'Naruszenie praw pracownika',
+      'Zmiana świadectwa pracy',
+      'Doradztwo w zakresie BHP',
+    ],
+    icon: <FaUserTie />,
+  },
+  {
+    id: 6,
+    title: 'Prawo Spółek',
+    mainDescription: 'Obsługa prawna przedsiębiorstw',
+    details: [
+      'Zakładanie i rejestrowanie spółek',
+      'Sporządzanie umów lub statutów (aktów założycielskich) spółek, fundacji, stowarzyszeń',
+      'Połączenia lub podział spółek',
+      'Składanie wniosków do sądu rejestrowego o wpis w Krajowym Rejestrze Sądowym',
+      'Przekształcenie spółek i jednoosobowych',
+      'Obsługa korporacyjna',
+      'Przygotowywanie uchwał organów spółek prawa handlowego',
+    ],
+    icon: <FaBriefcase />,
+  },
+  {
+    id: 7,
+    title: 'Prawo Administracyjne',
+    mainDescription: 'Reprezentacja przed organami administracji',
+    details: [
+      'Reprezentacja w postępowaniu administracyjnym',
+      'Reprezentacja w postępowaniu sądowoadministracyjnym',
+      'Przygotowanie opinii prawnych z zakresu prawa administracyjnego',
+      'Kwestionowanie decyzji administracyjnych',
+      'Składanie odwołań od decyzji administracyjnych',
+      'Sporządzanie i składanie skarg na decyzje administracyjne',
+      'Sporządzenie i wniesienie skargi kasacyjnej do Naczelnego Sadu Administracyjnego w Warszawie',
+    ],
+    icon: <FaBuilding />,
+  },
+  {
+    id: 8,
+    title: 'Prawo Upadłościowe i Restrukturyzacyjne',
+    mainDescription: 'Wsparcie w sprawach upadłościowych',
+    details: [
+      'Postępowania upadłościowe dla przedsiębiorców',
+      'Restrukturyzacja przedsiębiorstw',
+      'Upadłość konsumencka',
+    ],
+    icon: <FaChartLine />,
+  },
+  {
+    id: 9,
+    title: 'Ochrona Danych Osobowych',
+    mainDescription: 'Kompleksowa obsługa w zakresie RODO',
+    details: [
+      'Audyt zgodności z RODO',
+      'Opracowywanie polityk i procedur',
+      'Szkolenia z zakresu RODO',
+      'Reprezentacja przed organami nadzoru',
+      'Opracowywanie klauzul informacyjnych',
+      'Postępowanie w związku z incydentami bezpieczeństwa',
+    ],
+    icon: <FaFileAlt />,
+  },
+  {
+    id: 10,
+    title: 'Własność Intelektualna',
+    mainDescription: 'Ochrona praw własności intelektualnej',
+    details: [
+      'Ochrona prawa autorskiego',
+      'Ochrona wzorów wspólnotowych, znaków towarowych, wzorów przemysłowych, wzorów użytkowych, patentów',
+      'Ochrona firmy i pozostałych niematerialnych dóbr przedsiębiorstwa',
+      'Ochrona wizerunku',
+      'Sporządzanie i opiniowanie umów w zakresie prawa autorskiego, praw pokrewnych i prawa własności przemysłowej',
+      'Postępowania sądowe i arbitrażowe w zakresie naruszenia praw własności intelektualnej',
+    ],
+    icon: <FaBalanceScale />,
+  },
+  {
+    id: 11,
+    title: 'Rozwiązywanie Sporów',
+    mainDescription: 'Mediacje i rozwiązywanie konfliktów',
+    details: ['Mediacje pomiędzy osobami fizycznymi, osobami prawnymi'],
+    icon: <FaUsers />,
+  },
+  {
+    id: 12,
+    title: 'Prawo Karne',
+    mainDescription: 'Profesjonalna obrona w sprawach karnych',
+    details: [
+      'Obrona oskarżonych i obwinionych na etapie postępowania przygotowawczego i sądowego',
+      'Reprezentacja pokrzywdzonych i oskarżycieli posiłkowych',
+      'Udział w przesłuchaniu, posiedzeniu aresztowym',
+      'Przerwa w odbywaniu kary',
+      'Dozór elektroniczny',
+      'Zawieszenie wykonania kary',
+      'Wyrok łączny',
+    ],
+    icon: <FaGavel />,
+  },
+];
+
+export default function page() {
+  return <Services services={services} />;
 }

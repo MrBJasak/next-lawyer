@@ -1,0 +1,47 @@
+.privacy {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  &__title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__section {
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    ol {
+      list-style: decimal;
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    ul {
+      list-style: disc;
+      margin-left: 2.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      li {
+        margin-bottom: 0.3rem;
+      }
+    }
+  }
+}

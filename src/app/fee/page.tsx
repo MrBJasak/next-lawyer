@@ -1,3 +1,5 @@
-export default function Fee() {
-  return <div>Fee</div>;
+import { Fee } from '../../containers/Fee/Fee';
+
+export default function page() {
+  return <Fee />;
 }

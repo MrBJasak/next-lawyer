@@ -1,3 +1,5 @@
-export default function About() {
-  return <div>About</div>;
+import { About } from '../../containers/About/About';
+
+export default function page() {
+  return <About />;
 }
