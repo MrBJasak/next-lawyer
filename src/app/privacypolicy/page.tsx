@@ -1,3 +1,5 @@
+'use client';
+
 import { PrivacyPolicy } from '../../containers/PrivacyPolicy/PrivacyPolicy';
 import { PrivacyPolicyData } from '../../containers/PrivacyPolicy/privacyPolicy.types';
 
