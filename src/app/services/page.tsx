@@ -11,7 +11,7 @@ import {
   FaUserTie,
 } from 'react-icons/fa';
 
-export const services = [
+const services = [
   {
     id: 1,
     title: 'Porady prawne',
@@ -176,7 +176,7 @@ export const services = [
   },
 ];
 
-export default function page() {
+export default function Page() {
   return <Services services={services} />;
 }
 
