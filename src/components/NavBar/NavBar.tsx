@@ -1,6 +1,7 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,9 +11,9 @@ import './styles.scss';
 import { getHref, navItems, topBarItems, TopBarListProps } from './types';
 
 export const NavBar = () => {
+  const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -29,8 +30,6 @@ export const NavBar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // const router = useRouter();
-
   return (
     <>
       <div className='top-bar'>
@@ -40,7 +39,7 @@ export const NavBar = () => {
             <div className='top-bar-buttons'>
               <SocialIcons />
               <div>
-                <Button >Umów się</Button>
+                <Button onClick={() => router.push('/contact#contact-form')}>Umów się</Button>
               </div>
             </div>
           </div>
@@ -51,12 +50,7 @@ export const NavBar = () => {
           <div className='header-container-inner'>
             <div className='header-logo'>
               <Link href='/'>
-                <Image 
-                  src={logo} 
-                  alt='Logo Agnieszka Jasak' 
-                  className='header-logo-image'
-                  priority
-                />
+                <Image src={logo} alt='Logo Agnieszka Jasak' className='header-logo-image' priority />
               </Link>
             </div>
             <div className='burger-menu' onClick={toggleSidebar}>
@@ -137,6 +131,11 @@ const SocialIcons = () => {
       name: 'instagram',
       icon: <FaInstagram style={iconStyle} />,
       link: 'https://www.instagram.com/adwokat_agnieszka_jasak',
+    },
+    {
+      name: 'youtube',
+      icon: <FaYoutube style={iconStyle} />,
+      link: 'https://www.youtube.com/@agnieszkajasak',
     },
   ];
 

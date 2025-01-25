@@ -70,7 +70,7 @@ export const Contact = () => {
     const formData = new FormData(e.currentTarget);
     console.log(formData, 'formData');
     try {
-      const response = await fetch('/api/mailer', {
+      const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,18 +85,8 @@ export const Contact = () => {
       });
 
       console.log(response, 'response');
-
-      if (!response.ok) {
-        throw new Error('Błąd podczas wysyłania wiadomości');
-      }
-
-      // Clear form
-      e.currentTarget.reset();
-      setIsPrivacyAccepted(false);
-      alert('Wiadomość została wysłana pomyślnie!');
     } catch (error) {
-      console.error('Error:', error);
-      alert('Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie później.');
+      console.log(error, 'error');
     }
   };
 

@@ -86,12 +86,15 @@
     align-items: baseline;
     margin-bottom: 0.5rem;
     color: #666;
+    word-wrap: break-word;
+    word-break: break-word;
   }
 
   &__bullet {
     color: #3498db;
     margin-right: 0.5rem;
     font-weight: bold;
+    flex-shrink: 0;
   }
 
   &__button {

@@ -9,9 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { HomeProps } from '../../app/page';
 
-
-
-
 const ANIMATION_CONFIG = {
   DEFAULT: {
     tension: 280,
@@ -89,7 +86,6 @@ export const Home = ({ data }: HomeProps) => {
 
   return (
     <>
-  
       <animated.div className='home_header' style={headerAnimation}>
         <div className='header_content'>
           <div className='header_titles'>
@@ -103,10 +99,7 @@ export const Home = ({ data }: HomeProps) => {
           <animated.p className='header_description' style={descriptionAnimation}>
             {data.header.description}
           </animated.p>
-          <Button 
-            className='header_button' 
-            onClick={() => router.push('/kontakt#contact-form')}
-          >
+          <Button className='header_button' onClick={() => router.push('/contact#contact-form')}>
             {data.header.button}
           </Button>
         </div>
@@ -122,18 +115,14 @@ export const Home = ({ data }: HomeProps) => {
                   </p>
                 ))}
 
-                <p className='about_me_paragraph'>
-                  {data.aboutMe.services.intro}
-                </p>
+                <p className='about_me_paragraph'>{data.aboutMe.services.intro}</p>
                 <ul className='services_list'>
                   {data.aboutMe.services.list.map((service, index) => (
                     <li key={index}>{service}</li>
                   ))}
                 </ul>
 
-                <p className='about_me_paragraph'>
-                  {data.aboutMe.lawAreas.intro}
-                </p>
+                <p className='about_me_paragraph'>{data.aboutMe.lawAreas.intro}</p>
                 <ul className='law_areas_list'>
                   {data.aboutMe.lawAreas.list.map((area, index) => (
                     <li key={index}>{area}</li>
@@ -149,12 +138,7 @@ export const Home = ({ data }: HomeProps) => {
                 </p>
               </div>
             </div>
-            <Image 
-              src={image} 
-              alt='agnieszka' 
-              className='card_image'
-              priority
-            />
+            <Image src={image} alt='agnieszka' className='card_image' priority />
           </animated.div>
         </div>
       </div>

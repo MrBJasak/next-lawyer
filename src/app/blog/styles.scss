@@ -1,0 +1,39 @@
+.blog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  &__main-title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__no-entries {
+    text-align: center;
+    margin-top: 3rem;
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #666;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 1rem;
+
+    &__no-entries {
+      p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,14 +11,7 @@ export const Footer = () => {
         <div className='footer_grid'>
           <div className='footer_section'>
             <div className='footer_logo'>
-              <Image 
-                src={image} 
-                alt='Logo' 
-                width={40} 
-                height={40} 
-                className='footer_logo_image' 
-                priority
-              />
+              <Image src={image} alt='Logo' width={40} height={40} className='footer_logo_image' priority />
               <div className='footer_logo_text'>
                 <div>Kancelaria Adwokacka</div>
                 <div>Agnieszka Jasak</div>
@@ -26,18 +19,22 @@ export const Footer = () => {
             </div>
 
             <p className='footer_description'>
-              Profesjonalna obsługa prawna w zakresie prawa karnego, cywilnego, rodzinnego oraz gospodarczego.
+              Profesjonalna obsługa prawna w zakresie prawa cywilnego, prawa pracy, prawa gospodarczego, prawa
+              administracyjnego i prawa karnego.
             </p>
 
             <div className='footer_social'>
-              <Link href='#' className='footer_social_link'>
+              <Link href='https://www.facebook.com/profile.php?id=61566701225521' className='footer_social_link'>
                 <FaFacebook />
               </Link>
-              <Link href='#' className='footer_social_link'>
+              <Link href='https://www.linkedin.com/in/agnieszka-jasak-7b5861170/' className='footer_social_link'>
                 <FaLinkedin />
               </Link>
-              <Link href='#' className='footer_social_link'>
+              <Link href='https://www.instagram.com/adwokat_agnieszka_jasak' className='footer_social_link'>
                 <FaInstagram />
+              </Link>
+              <Link href='https://www.youtube.com/@agnieszkajasak' className='footer_social_link'>
+                <FaYoutube />
               </Link>
             </div>
           </div>
@@ -65,9 +62,9 @@ export const Footer = () => {
           {/* Description Section */}
           <div className='footer_section'>
             <p className='footer_text'>
-              Kancelaria świadczy kompleksową pomoc prawną zarówno na rzecz osób fizycznych, jak i podmiotów
-              gospodarczych. Specjalizujemy się w sprawach z zakresu prawa karnego, cywilnego, rodzinnego oraz
-              gospodarczego.
+              Kancelaria świadczy kompleksową pomoc prawną zarówno na rzecz osób fizycznych, jak i osób prawnych. Obszar
+              działania Kancelarii obejmuje teren całej Polski, skupiając się przede wszystkim na świadczeniu usług
+              prawnych na terenie województwa łódzkiego i śląskiego.
             </p>
           </div>
         </div>

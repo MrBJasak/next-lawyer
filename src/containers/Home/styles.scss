@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/radomsko.jpeg');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/radomsko1.jpg');
   background-size: cover;
   background-position: center;
 
@@ -265,12 +265,14 @@
   .about_me_paragraph {
     margin-bottom: 1rem;
     line-height: 1.6;
+    text-align: justify;
   }
 
   .services_list,
   .law_areas_list {
     margin: 1rem 0;
     padding-left: 2rem;
+    text-align: justify;
 
     li {
       list-style-type: disc;

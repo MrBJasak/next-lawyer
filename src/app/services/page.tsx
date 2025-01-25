@@ -179,3 +179,5 @@ export const services = [
 export default function page() {
   return <Services services={services} />;
 }
+
+// https://medium.com/@ntltd/how-to-simply-configure-your-ovh-domain-with-your-vercel-project-b2b1d5cd10f3

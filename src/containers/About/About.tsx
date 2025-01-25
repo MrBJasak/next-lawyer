@@ -16,14 +16,8 @@ export const About = () => {
   }, []);
 
   const imageAnimation = useSpring({
-    from: {
-      opacity: 0,
-      x: 100,
-    },
-    to: {
-      opacity: isVisible ? 1 : 0,
-      x: isVisible ? 0 : 100,
-    },
+    opacity: isVisible ? 1 : 0,
+    x: isVisible ? 0 : 100,
     config: {
       tension: 280,
       friction: 20,
@@ -31,14 +25,8 @@ export const About = () => {
   });
 
   const textAnimation = useSpring({
-    from: {
-      opacity: 0,
-      y: 20,
-    },
-    to: {
-      opacity: isVisible ? 1 : 0,
-      y: isVisible ? 0 : 20,
-    },
+    opacity: isVisible ? 1 : 0,
+    y: isVisible ? 0 : 20,
     config: {
       tension: 280,
       friction: 20,

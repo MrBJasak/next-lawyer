@@ -3,7 +3,7 @@ import { AiOutlinePhone, AiTwotoneMail } from 'react-icons/ai';
 export const topBarItems = [
   {
     value: '+48 665 643 337',
-    icon: <AiOutlinePhone className='icon' />,
+    icon: <AiOutlinePhone className='icon' style={{ transform: 'rotate(90deg)' }} />,
     href: '#',
     type: 'phone',
   },
@@ -19,8 +19,9 @@ export type TopBarListProps = typeof topBarItems;
 export const navItems = [
   { label: 'Strona główna', path: '/' },
   { label: 'O mnie', path: '/about' },
-  { label: 'Usługi', path: '/services' },
+  { label: 'Zakres usług', path: '/services' },
   { label: 'Honorarium', path: '/fee' },
+  { label: 'Blog', path: '/blog' },
   { label: 'Kontakt', path: '/contact' },
 ];
 
