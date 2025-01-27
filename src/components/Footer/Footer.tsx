@@ -71,7 +71,7 @@ export const Footer = () => {
 
         <div className='footer_bottom'>
           <p>© 2024 Kancelaria Adwokacka Agnieszka Jasak</p>
-          <Link href='/polityka-prywatnosci' className='footer_bottom_link'>
+          <Link href='/privacypolicy' className='footer_bottom_link'>
             Polityka Prywatności
           </Link>
         </div>
