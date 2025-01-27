@@ -89,15 +89,15 @@ export const Home = ({ data }: HomeProps) => {
       <animated.div className='home_header' style={headerAnimation}>
         <div className='header_content'>
           <div className='header_titles'>
-            <animated.h2 className='header_main_title' style={titleAnimation}>
+            <animated.h1 className='header_main_title' style={titleAnimation}>
               {data.header.mainTitle}
-            </animated.h2>
-            <animated.h2 className='header_sub_title' style={titleAnimation}>
+            </animated.h1>
+            <animated.h1 className='header_sub_title' style={titleAnimation}>
               ADWOKAT
-            </animated.h2>
-            <animated.h3 className='header_sub_title' style={subtitleAnimation}>
+            </animated.h1>
+            <animated.h2 className='header_sub_title' style={subtitleAnimation}>
               {data.header.subTitle}
-            </animated.h3>
+            </animated.h2>
           </div>
           <animated.p className='header_description' style={descriptionAnimation}>
             {data.header.description}

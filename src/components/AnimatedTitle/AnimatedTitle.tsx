@@ -14,8 +14,8 @@ export const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ children, classNam
     delay: 200,
   });
   return (
-    <animated.h2 className={`animated-title ${className}`} style={titleAnimation}>
+    <animated.h1 className={`animated-title ${className}`} style={titleAnimation}>
       {children}
-    </animated.h2>
+    </animated.h1>
   );
 };
