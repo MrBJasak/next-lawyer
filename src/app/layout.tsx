@@ -50,15 +50,16 @@ export default function RootLayout({
     <html lang={DEFAULT_LOCALE}>
       <head>
         <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, viewport-fit=cover' />
         <meta
           name='description'
-          content='Kancelaria Prawna Agnieszka Jasak - profesjonalne usługi prawne w zakresie prawa cywilnego, rodzinnego i gospodarczego. Skuteczna pomoc prawna i doradztwo.'
+          content='Kancelaria Adwokacka Agnieszka Jasak - profesjonalna pomoc prawna w sprawach cywilnych, rodzinnych i gospodarczych.'
         />
         <link rel='preload' href='/logo.jpg' as='image' type='image/jpg' />
         <link rel='icon' type='image/jpg' href='/logo.jpg' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/logo.jpg' />
         <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <title>Kancelaria Agnieszka Jasak</title>
+        <title>Kancelaria Adwokacka Agnieszka Jasak | Profesjonalna Pomoc Prawna</title>
       </head>
       <body>
         <Layout>{children}</Layout>

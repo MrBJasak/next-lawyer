@@ -92,9 +92,9 @@ export const Home = ({ data }: HomeProps) => {
             <animated.h1 className='header_main_title' style={titleAnimation}>
               {data.header.mainTitle}
             </animated.h1>
-            <animated.h1 className='header_sub_title' style={titleAnimation}>
+            <animated.h2 className='header_sub_title' style={titleAnimation}>
               ADWOKAT
-            </animated.h1>
+            </animated.h2>
             <animated.h2 className='header_sub_title' style={subtitleAnimation}>
               {data.header.subTitle}
             </animated.h2>
