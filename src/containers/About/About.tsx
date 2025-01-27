@@ -58,7 +58,7 @@ export const About = () => {
             className='about-text'
           >
             <p>
-              Jestem absolwentkom Wydziału Prawa i Administracji Uniwersytetu Opolskiego. W 2019 r. obroniłam pracę
+              Jestem absolwentką Wydziału Prawa i Administracji Uniwersytetu Opolskiego. W 2019 r. obroniłam pracę
               magisterską pod tytułem ,,Umowy w zakresie komercjalizacji wyników badań naukowych, której promotorem był
               profesor Piotr Stec.
             </p>

@@ -92,6 +92,9 @@ export const Home = ({ data }: HomeProps) => {
             <animated.h2 className='header_main_title' style={titleAnimation}>
               {data.header.mainTitle}
             </animated.h2>
+            <animated.h2 className='header_sub_title' style={titleAnimation}>
+              ADWOKAT
+            </animated.h2>
             <animated.h3 className='header_sub_title' style={subtitleAnimation}>
               {data.header.subTitle}
             </animated.h3>
