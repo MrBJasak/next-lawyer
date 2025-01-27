@@ -33,6 +33,7 @@
         line-height: 1.8;
         margin-bottom: 1.5rem;
         font-size: 1.1rem;
+        text-align: justify;
       }
     }
   }
@@ -50,13 +51,16 @@
       float: none;
       width: 100%;
       margin-left: 0;
+      margin-bottom: 1rem;
     }
 
     .about-text {
+      margin-top: 0;
       p {
         font-size: 0.9rem;
         line-height: 1.6;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        text-align: left;
       }
     }
   }
