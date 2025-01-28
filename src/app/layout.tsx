@@ -11,9 +11,9 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': ['LegalService', 'LocalBusiness'],
-    name: 'Kancelaria Adwokacka Agnieszka Jasak',
+    name: 'Adwokat Agnieszka Jasak | Kancelaria Adwokacka Radomsko',
     description:
-      'Kancelaria Prawna Agnieszka Jasak - profesjonalne usługi prawne w zakresie prawa cywilnego, rodzinnego i gospodarczego. Skuteczna pomoc prawna i doradztwo.',
+      'Kancelaria Adwokacka w Radomsku oferująca profesjonalną pomoc prawną. Specjalizacja: sprawy cywilne, rodzinne i gospodarcze. Doświadczony adwokat.',
     url: 'https://adwokatjasak.pl',
     telephone: '+48665643337',
     email: 'adwokat.agnieszka.jasak@gmail.com',
@@ -53,13 +53,17 @@ export default function RootLayout({
         <meta name='viewport' content='width=device-width, initial-scale=1.0, viewport-fit=cover' />
         <meta
           name='description'
-          content='Kancelaria Adwokacka Agnieszka Jasak - profesjonalna pomoc prawna w sprawach cywilnych, rodzinnych i gospodarczych.'
+          content='Kancelaria Adwokacka w Radomsku oferująca profesjonalną pomoc prawną. Specjalizacja: sprawy cywilne, rodzinne i gospodarcze. Doświadczony adwokat.'
+        />
+        <meta
+          name='keywords'
+          content='adwokat radomsko, kancelaria adwokacka, pomoc prawna, prawo cywilne, prawo rodzinne, prawo gospodarcze, prawnik radomsko'
         />
         <link rel='preload' href='/logo.jpg' as='image' type='image/jpg' />
         <link rel='icon' type='image/jpg' href='/logo.jpg' />
-        <link rel='apple-touch-icon' sizes='180x180' href='/logo.jpg' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
         <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <title>Kancelaria Adwokacka Agnieszka Jasak | Profesjonalna Pomoc Prawna</title>
+        <title>Adwokat Radomsko | Kancelaria Adwokacka Agnieszka Jasak</title>
       </head>
       <body>
         <Layout>{children}</Layout>
