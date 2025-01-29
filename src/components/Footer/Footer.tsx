@@ -2,7 +2,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import image from '../../../public/logo.jpg';
+import image from '../../../public/logo_sygnet.png';
 import './styles.scss';
 export const Footer = () => {
   return (
