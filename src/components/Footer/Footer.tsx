@@ -24,16 +24,28 @@ export const Footer = () => {
             </p>
 
             <div className='footer_social'>
-              <Link href='https://www.facebook.com/profile.php?id=61566701225521' className='footer_social_link'>
+              <Link
+                href='https://www.facebook.com/profile.php?id=61566701225521'
+                className='footer_social_link'
+                title='Facebook'
+              >
                 <FaFacebook />
               </Link>
-              <Link href='https://www.linkedin.com/in/agnieszka-jasak-7b5861170/' className='footer_social_link'>
+              <Link
+                href='https://www.linkedin.com/in/agnieszka-jasak-7b5861170/'
+                className='footer_social_link'
+                title='LinkedIn'
+              >
                 <FaLinkedin />
               </Link>
-              <Link href='https://www.instagram.com/adwokat_agnieszka_jasak' className='footer_social_link'>
+              <Link
+                href='https://www.instagram.com/adwokat_agnieszka_jasak'
+                className='footer_social_link'
+                title='Instagram'
+              >
                 <FaInstagram />
               </Link>
-              <Link href='https://www.youtube.com/@agnieszkajasak' className='footer_social_link'>
+              <Link href='https://www.youtube.com/@agnieszkajasak' className='footer_social_link' title='YouTube'>
                 <FaYoutube />
               </Link>
             </div>
@@ -47,12 +59,12 @@ export const Footer = () => {
             </div>
             <div className='footer_contact_info'>
               <p>
-                <a href='tel:+665643337' className='footer_contact_link'>
+                <a href='tel:+665643337' className='footer_contact_link' title='Zadzwoń do nas'>
                   +48 665-643-337
                 </a>
               </p>
               <p>
-                <a href='mailto:adwokat.agnieszka.jasak@gmail.com' className='footer_contact_link'>
+                <a href='mailto:adwokat.agnieszka.jasak@gmail.com' className='footer_contact_link' title='Wyślij email'>
                   adwokat.agnieszka.jasak@gmail.com
                 </a>
               </p>
@@ -71,7 +83,7 @@ export const Footer = () => {
 
         <div className='footer_bottom'>
           <p>© 2024 Kancelaria Adwokacka Agnieszka Jasak</p>
-          <Link href='/privacypolicy' className='footer_bottom_link'>
+          <Link href='/privacypolicy' className='footer_bottom_link' title='Polityka Prywatności'>
             Polityka Prywatności
           </Link>
         </div>

@@ -141,6 +141,7 @@ export const Contact = () => {
                     <a
                       href={`mailto:${infoItems[index].value}`}
                       className='contact__info-value contact__info-value--link'
+                      title='Wyślij email do adwokata'
                     >
                       {infoItems[index].value}
                     </a>

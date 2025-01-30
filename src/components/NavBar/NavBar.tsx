@@ -71,7 +71,7 @@ export const NavBar = () => {
         <div className='sidebar-nav-items'>
           {navItems.map((item, index) => (
             <div key={index} className='sidebar-nav-item'>
-              <Link onClick={toggleSidebar} href={item.path}>
+              <Link onClick={toggleSidebar} href={item.path} title={`Przejdź do ${item.label}`}>
                 {item.label}
               </Link>
             </div>
@@ -88,7 +88,11 @@ const TopBarList = ({ items }: { items: TopBarListProps }) => {
       {items.map((item, index) => (
         <div key={index} className='topbar-item'>
           {item.icon}
-          <a href={getHref(item)} className={item.type === 'time' ? 'no-cursor' : 'link'}>
+          <a
+            href={getHref(item)}
+            className={item.type === 'time' ? 'no-cursor' : 'link'}
+            title={item.type === 'time' ? 'Czas' : 'Link'}
+          >
             {item.value}
           </a>
           {index !== items.length - 1 && <span className='separator'>&middot;</span>}
@@ -103,7 +107,9 @@ const NavBarList = ({ items }: { items: { label: string; path: string }[] }) => 
     <>
       {items.map((item, index) => (
         <div className='header-nav-item' key={index}>
-          <Link href={item.path}>{item.label}</Link>
+          <Link href={item.path} title={`Przejdź do ${item.label}`}>
+            {item.label}
+          </Link>
         </div>
       ))}
     </>
@@ -143,7 +149,13 @@ const SocialIcons = () => {
     <div style={{ display: 'flex', gap: '10px' }}>
       {socialIcons.map((socialIcon, index) => {
         return (
-          <a key={index} href={socialIcon.link} target='_blank' rel='noopener noreferrer'>
+          <a
+            key={index}
+            href={socialIcon.link}
+            target='_blank'
+            rel='noopener noreferrer'
+            title={`Odwiedź nas na ${socialIcon.name}`}
+          >
             {socialIcon.icon}
           </a>
         );
