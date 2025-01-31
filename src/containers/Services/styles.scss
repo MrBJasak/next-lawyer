@@ -51,11 +51,16 @@
     justify-content: center;
     margin: 0 auto 1.5rem;
     transition: all 0.3s ease;
+    position: relative;
 
     .services__icon {
       font-size: 2rem;
       color: #005028;
       transition: color 0.3s ease;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 

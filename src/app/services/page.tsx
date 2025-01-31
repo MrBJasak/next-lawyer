@@ -1,15 +1,11 @@
 import { Services } from '../../containers/Services/Services';
 
-import {
-  FaBalanceScale,
-  FaBriefcase,
-  FaBuilding,
-  FaChartLine,
-  FaFileAlt,
-  FaGavel,
-  FaUsers,
-  FaUserTie,
-} from 'react-icons/fa';
+import { FaBalanceScale, FaBuilding, FaGavel, FaHandsHelping } from 'react-icons/fa';
+import { FaRegCopyright } from 'react-icons/fa6';
+import { GiFamilyTree, GiHandcuffs } from 'react-icons/gi';
+import { GrDocumentLocked, GrUserWorker } from 'react-icons/gr';
+import { MdOutlineBusinessCenter, MdOutlineFamilyRestroom } from 'react-icons/md';
+import { SiLibreofficeimpress } from 'react-icons/si';
 
 const services = [
   {
@@ -17,7 +13,7 @@ const services = [
     title: 'Porady prawne',
     mainDescription: 'Kompleksowa obsługa prawna',
     details: ['Porady prawne', 'Sporządzanie i opiniowanie umów'],
-    icon: <FaGavel />,
+    icon: <FaBalanceScale />,
   },
   {
     id: 2,
@@ -35,7 +31,7 @@ const services = [
       'Ustalenie stanu prawnego nieruchomości/zasiedzenie/służebności/zniesienie współwłasności',
       'Ochrona dóbr osobistych',
     ],
-    icon: <FaBalanceScale />,
+    icon: <FaGavel />,
   },
   {
     id: 3,
@@ -51,7 +47,7 @@ const services = [
       'Pozbawienie/ograniczenie władzy rodzicielskiej',
       'Ustanowienie rodziny zastępczej',
     ],
-    icon: <FaUsers />,
+    icon: <MdOutlineFamilyRestroom />,
   },
   {
     id: 4,
@@ -66,7 +62,7 @@ const services = [
       'Dochodzenie zachowku',
       'Stwierdzenie nieważności testamentu',
     ],
-    icon: <FaFileAlt />,
+    icon: <GiFamilyTree />,
   },
   {
     id: 5,
@@ -81,7 +77,7 @@ const services = [
       'Zmiana świadectwa pracy',
       'Doradztwo w zakresie BHP',
     ],
-    icon: <FaUserTie />,
+    icon: <GrUserWorker />,
   },
   {
     id: 6,
@@ -96,7 +92,7 @@ const services = [
       'Obsługa korporacyjna',
       'Przygotowywanie uchwał organów spółek prawa handlowego',
     ],
-    icon: <FaBriefcase />,
+    icon: <MdOutlineBusinessCenter />,
   },
   {
     id: 7,
@@ -122,7 +118,7 @@ const services = [
       'Restrukturyzacja przedsiębiorstw',
       'Upadłość konsumencka',
     ],
-    icon: <FaChartLine />,
+    icon: <SiLibreofficeimpress />,
   },
   {
     id: 9,
@@ -136,7 +132,7 @@ const services = [
       'Opracowywanie klauzul informacyjnych',
       'Postępowanie w związku z incydentami bezpieczeństwa',
     ],
-    icon: <FaFileAlt />,
+    icon: <GrDocumentLocked />,
   },
   {
     id: 10,
@@ -150,14 +146,14 @@ const services = [
       'Sporządzanie i opiniowanie umów w zakresie prawa autorskiego, praw pokrewnych i prawa własności przemysłowej',
       'Postępowania sądowe i arbitrażowe w zakresie naruszenia praw własności intelektualnej',
     ],
-    icon: <FaBalanceScale />,
+    icon: <FaRegCopyright />,
   },
   {
     id: 11,
     title: 'Rozwiązywanie Sporów',
     mainDescription: 'Mediacje i rozwiązywanie konfliktów',
     details: ['Mediacje pomiędzy osobami fizycznymi, osobami prawnymi'],
-    icon: <FaUsers />,
+    icon: <FaHandsHelping />,
   },
   {
     id: 12,
@@ -172,12 +168,10 @@ const services = [
       'Zawieszenie wykonania kary',
       'Wyrok łączny',
     ],
-    icon: <FaGavel />,
+    icon: <GiHandcuffs />,
   },
 ];
 
 export default function Page() {
   return <Services services={services} />;
 }
-
-// https://medium.com/@ntltd/how-to-simply-configure-your-ovh-domain-with-your-vercel-project-b2b1d5cd10f3
