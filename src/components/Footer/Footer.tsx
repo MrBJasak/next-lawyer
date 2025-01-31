@@ -82,7 +82,8 @@ export const Footer = () => {
         </div>
 
         <div className='footer_bottom'>
-          <p>© 2024 Kancelaria Adwokacka Agnieszka Jasak</p>
+          <p>© {new Date().getFullYear()} Kancelaria Adwokacka Agnieszka Jasak</p>
+
           <Link href='/privacypolicy' className='footer_bottom_link' title='Polityka Prywatności'>
             Polityka Prywatności
           </Link>
