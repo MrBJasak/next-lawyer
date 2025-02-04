@@ -3,12 +3,12 @@ import certificate1 from '../../assets/certificates/certyfikat1.jpeg';
 import certificate2 from '../../assets/certificates/certyfikat2.jpg';
 import certificate3 from '../../assets/certificates/certyfikat3.jpg';
 import certificate4 from '../../assets/certificates/certyfikat4.jpg';
-
+import certificate5 from '../../assets/certificates/certyfikat5.jpg';
 import { AnimatedTitle } from '../../components/AnimatedTitle/AnimatedTitle';
 import './styles.scss';
 
 export const Certificates = () => {
-  const images = [certificate2, certificate3, certificate4, certificate1];
+  const images = [certificate2, certificate3, certificate4, certificate1, certificate5];
 
   const trail = useTrail(images.length, {
     from: { opacity: 0, transform: 'translateY(20px)' },
