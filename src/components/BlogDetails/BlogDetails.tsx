@@ -20,6 +20,8 @@ export const BlogDetails: FC<BlogDetailsProps> = ({ id }) => {
         <Image src={currentBlogData.image} width={600} height={400} alt='Blog post image' priority />
       </div>
       <p className='blog-details__content'>{currentBlogData.content}</p>
+
+      <p className='blog-details__footer'>Publikowane treści nie stanowią porady prawnej.</p>
     </div>
   );
 };
