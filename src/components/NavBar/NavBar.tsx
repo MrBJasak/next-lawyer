@@ -77,6 +77,20 @@ export const NavBar = () => {
             </div>
           ))}
         </div>
+        <div className='sidebar-contact-info'>
+          {topBarItems.map((item, index) => (
+            <div key={index} className='sidebar-contact-item'>
+              {item.icon}
+              <a
+                href={getHref(item)}
+                className={item.type === 'time' ? 'no-cursor' : 'link'}
+                title={item.type === 'time' ? 'Czas' : 'Link'}
+              >
+                {item.value}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

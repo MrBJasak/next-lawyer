@@ -21,6 +21,7 @@ export const navItems = [
   { label: 'O mnie', path: '/about' },
   { label: 'Zakres usług', path: '/services' },
   { label: 'Honorarium', path: '/fee' },
+  { label: 'Blog', path: '/blog' },
   { label: 'Kontakt', path: '/contact' },
 ];
 
