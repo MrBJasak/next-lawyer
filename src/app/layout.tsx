@@ -2,7 +2,7 @@
 import '../../src/styles/styles.scss';
 import { Layout } from '../components/Layout';
 const DEFAULT_LOCALE = 'PL';
-
+//test
 export default function RootLayout({
   children,
 }: Readonly<{
