@@ -37,12 +37,13 @@ const ANIMATION_CONFIG = {
 } as const;
 
 export const Home = ({ data }: HomeProps) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setIsVisible(true);
-    if (location.hash === '#contact-form') {
+    setMounted(true);
+
+    if (typeof window !== 'undefined' && location.hash === '#contact-form') {
       const element = document.getElementById('contact-form');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
@@ -53,37 +54,36 @@ export const Home = ({ data }: HomeProps) => {
   const fadeIn = useSpring({
     ...ANIMATION_CONFIG.TRANSFORMS.FADE_IN,
     config: ANIMATION_CONFIG.DEFAULT,
-    immediate: !isVisible,
+    immediate: !mounted, // Avoid animation mismatch on hydration
   });
 
   const headerAnimation = useSpring({
     ...ANIMATION_CONFIG.TRANSFORMS.HEADER,
     delay: ANIMATION_CONFIG.DELAYS.HEADER,
     config: ANIMATION_CONFIG.DEFAULT,
-    immediate: !isVisible,
+    immediate: !mounted,
   });
 
   const titleAnimation = useSpring({
     ...ANIMATION_CONFIG.TRANSFORMS.SIDE_ELEMENTS,
     delay: ANIMATION_CONFIG.DELAYS.TITLE,
     config: ANIMATION_CONFIG.DEFAULT,
-    immediate: !isVisible,
+    immediate: !mounted,
   });
 
   const subtitleAnimation = useSpring({
     ...ANIMATION_CONFIG.TRANSFORMS.SIDE_ELEMENTS,
     delay: ANIMATION_CONFIG.DELAYS.SUBTITLE,
     config: ANIMATION_CONFIG.DEFAULT,
-    immediate: !isVisible,
+    immediate: !mounted,
   });
 
   const descriptionAnimation = useSpring({
     ...ANIMATION_CONFIG.TRANSFORMS.SIDE_ELEMENTS,
     delay: ANIMATION_CONFIG.DELAYS.DESCRIPTION,
     config: ANIMATION_CONFIG.DEFAULT,
-    immediate: !isVisible,
+    immediate: !mounted,
   });
-
   return (
     <>
       <animated.div className='home_header' style={headerAnimation}>
