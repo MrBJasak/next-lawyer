@@ -13,3 +13,14 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+model BlogPost {
+  id            String   @id @default(uuid())
+  title         String
+  content       Json
+  createdAt     DateTime @default(now())
+  imageBucketId String?  @map("image_bucket_id")
+  imageName     String?  @map("image_name")
+
+  @@map("blog_posts")
+}

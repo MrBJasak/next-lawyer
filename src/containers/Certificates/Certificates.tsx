@@ -1,28 +1,51 @@
-import { animated, useTrail } from '@react-spring/web';
-import certificate1 from '../../assets/certificates/certyfikat1.jpeg';
-import certificate2 from '../../assets/certificates/certyfikat2.jpg';
-import certificate3 from '../../assets/certificates/certyfikat3.jpg';
-import certificate4 from '../../assets/certificates/certyfikat4.jpg';
-import certificate5 from '../../assets/certificates/certyfikat5.jpg';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { AnimatedTitle } from '../../components/AnimatedTitle/AnimatedTitle';
+import { createClient } from '../../utils/supabase/client';
 import './styles.scss';
-
+const BUCKET_NAME = 'next-lawyer-certificates';
 export const Certificates = () => {
-  const images = [certificate2, certificate3, certificate4, certificate1, certificate5];
+  const supabase = createClient();
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  const trail = useTrail(images.length, {
-    from: { opacity: 0, transform: 'translateY(20px)' },
-    to: { opacity: 1, transform: 'translateY(0)' },
-    delay: 200,
-    config: { tension: 300, friction: 20 },
-  });
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const { data: fileList, error: listError } = await supabase.storage.from(BUCKET_NAME).list();
+
+        if (listError) {
+          console.error('Error listing files:', listError);
+          return;
+        }
+
+        if (!fileList || fileList.length === 0) {
+          console.log('No files found');
+          return;
+        }
+
+        const urls = await Promise.all(
+          fileList.map(async (file) => {
+            const { data: urlData } = await supabase.storage.from(BUCKET_NAME).createSignedUrl(file.name, 60 * 60); // URL valid for 1 hour
+            console.log(urlData, 'urlData');
+            return urlData?.signedUrl || '';
+          }),
+        );
+
+        setImageUrls(urls.filter((url) => url !== ''));
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    }
+
+    fetchImages();
+  }, []);
 
   return (
     <div>
       <AnimatedTitle>Certyfikaty</AnimatedTitle>
       <div className='certificates-grid'>
-        {trail.map((props, index) => (
-          <animated.img key={index} style={props} src={images[index].src} alt={`Certyfikat ${index + 1}`} />
+        {imageUrls.map((imageUrl, index) => (
+          <Image key={index} src={imageUrl} alt={`Certyfikat ${index + 1}`} width={500} height={500} />
         ))}
       </div>
     </div>

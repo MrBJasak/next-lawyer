@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { createClient } from '../../../utils/supabase/client';
+import { createClient } from '../../utils/supabase/client';
 
 export const LogoutButton = () => {
   const router = useRouter();
@@ -12,7 +12,7 @@ export const LogoutButton = () => {
       await supabase.auth.signOut();
       router.push('/');
     } catch (error) {
-      console.error('Błąd wylogowania:', error);
+      console.error(error);
     }
   }
 
