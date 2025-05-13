@@ -7,7 +7,7 @@ import { BUCKET_NAME } from '../../utils/supabase/types';
 import './styles.scss';
 
 interface BlogPost {
-  id: number;
+  id: string;
   title: string;
   excerpt: string;
   content: string | Record<string, unknown>;
@@ -19,10 +19,11 @@ interface BlogPost {
 }
 
 interface BlogDetailsProps {
-  id: number;
+  id: string;
 }
 
 export const BlogDetails: FC<BlogDetailsProps> = ({ id }) => {
+  console.log('BlogDetails component rendered with id:', id);
   const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const supabase = createClient();

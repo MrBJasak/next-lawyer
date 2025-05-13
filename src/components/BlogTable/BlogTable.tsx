@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { FaEdit, FaEllipsisH, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { createClient } from '../../utils/supabase/client';
 import './styles.scss';
 
 interface BlogPost {
@@ -21,25 +22,21 @@ interface BlogDataProps {
 }
 
 export function BlogTable({ posts }: BlogDataProps) {
+  const client = createClient();
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState<string | null>(null);
-  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
 
   const handleDelete = (id: string) => {
     setPostToDelete(id);
     setDeleteDialogOpen(true);
-    setDropdownOpen(null);
   };
 
   const confirmDelete = () => {
-    // In a real app, you would call an API to delete the post
     console.log(`Deleting post ${postToDelete}`);
+    client.from('blog').delete().eq('id', postToDelete);
     setDeleteDialogOpen(false);
     setPostToDelete(null);
-  };
-
-  const toggleDropdown = (id: string) => {
-    setDropdownOpen(dropdownOpen === id ? null : id);
   };
 
   const formatDate = (dateString: string) => {
@@ -73,26 +70,17 @@ export function BlogTable({ posts }: BlogDataProps) {
                 <td>{formatDate(post.created_at)}</td>
                 <td>{post.image_name || 'No image'}</td>
                 <td>
-                  <div className='dropdown'>
+                  <div className='action-buttons'>
+                    <Link href={`/admin/dashboard/posts/${post.id}`} className='action-button edit-button' title='Edit'>
+                      <FaEdit />
+                    </Link>
                     <button
-                      className='button button--secondary button--icon button--icon-only'
-                      onClick={() => toggleDropdown(post.id)}
+                      className='action-button delete-button'
+                      onClick={() => handleDelete(post.id)}
+                      title='Delete'
                     >
-                      <FaEllipsisH />
-                      <span className='sr-only'>Open menu</span>
+                      <FaTrashAlt />
                     </button>
-                    {dropdownOpen === post.id && (
-                      <div className='dropdown__menu'>
-                        <Link href={`/admin/dashboard/posts/${post.id}`} className='dropdown__menu-item'>
-                          <FaEdit />
-                          Edit
-                        </Link>
-                        <button className='dropdown__menu-item' onClick={() => handleDelete(post.id)}>
-                          <FaTrashAlt />
-                          Delete
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </td>
               </tr>

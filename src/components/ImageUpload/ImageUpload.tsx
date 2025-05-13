@@ -119,7 +119,20 @@ export function ImageUpload({ onImageUpload, onImageRemove, initialImage }: Imag
         </div>
       ) : (
         <div className='image-upload__preview'>
-          <img src={preview || '/placeholder.svg'} alt='Preview' className='image-upload__image' />
+          <img
+            src={preview || '/placeholder.svg'}
+            alt='Preview'
+            className='image-upload__image'
+            onLoad={(e) => {
+              // Adjust image display based on aspect ratio
+              const img = e.target as HTMLImageElement;
+              if (img.naturalWidth > img.naturalHeight * 1.5) {
+                img.style.objectFit = 'contain';
+              } else {
+                img.style.objectFit = 'cover';
+              }
+            }}
+          />
           <button type='button' className='image-upload__remove' onClick={removeImage}>
             <FaTimesCircle />
             <span>Remove</span>

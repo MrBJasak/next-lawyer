@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createClient } from '../../utils/supabase/client';
 
+import { toast } from 'react-toastify';
 import { BlogEditor } from '../BlogEditor';
 import { ImageUpload } from '../ImageUpload/ImageUpload';
 import './styles.scss';
@@ -59,6 +60,18 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
 
   const onSubmit = async (data: FormValues) => {
     try {
+      if (!isEditing && !featuredImage && !defaultValues.featuredImage) {
+        toast.info('Wyróżniony obraz jest wymagany', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
+      }
+
       let uploadedImageName = defaultValues.featuredImage || '';
       const bucket = BUCKET_NAME;
 
@@ -73,6 +86,18 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
           });
         console.log(uploadData, 'uploadData');
         if (uploadError) throw new Error(`Przesyłanie obrazu nie powiodło się: ${uploadError.message}`);
+      }
+
+      if (!uploadedImageName) {
+        toast.info('Wyróżniony obraz jest wymagany', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
       }
 
       const blogPayload = {
@@ -136,12 +161,15 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
       </div>
 
       <div className='form-group'>
-        <label>Wyróżniony obraz</label>
+        <label>
+          Wyróżniony obraz <span className='required'>*</span>
+        </label>
         <ImageUpload
           onImageUpload={handleImageUpload}
           onImageRemove={handleImageRemove}
           initialImage={featuredImageUrl}
         />
+        {!featuredImageUrl && !featuredImage && <p className='error-message'>Wyróżniony obraz jest wymagany</p>}
       </div>
 
       <div className='form-group'>

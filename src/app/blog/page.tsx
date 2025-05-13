@@ -25,7 +25,7 @@ export default function BlogPage() {
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
-      const { data: blog, error } = await supabase.from('blog').select('*');
+      const { data: blog, error } = await supabase.from('blog').select('*').eq('status', 'published');
 
       if (error) {
         console.error('Error fetching blog posts:', error);

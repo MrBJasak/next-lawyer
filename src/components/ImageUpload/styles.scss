@@ -1,5 +1,6 @@
 .image-upload {
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .image-upload__input {
@@ -58,14 +59,19 @@
   position: relative;
   border-radius: var(--border-radius);
   overflow: hidden;
-  max-height: 300px;
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
 }
 
 .image-upload__image {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .image-upload__remove {
@@ -87,4 +93,37 @@
 
 .image-upload__remove:hover {
   background-color: rgba(220, 53, 69, 0.9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .image-upload__preview {
+    aspect-ratio: 4/3;
+  }
+
+  .image-upload__dropzone {
+    padding: 1.5rem;
+  }
+
+  .image-upload__icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-upload__preview {
+    aspect-ratio: 1/1;
+  }
+
+  .image-upload__dropzone {
+    padding: 1rem;
+  }
+
+  .image-upload__icon {
+    font-size: 2rem;
+  }
+
+  .image-upload__text p {
+    font-size: 0.9rem;
+  }
 }
