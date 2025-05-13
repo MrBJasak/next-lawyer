@@ -13,7 +13,6 @@ export async function login({ email, password }: SignInCredentials) {
   }
 
   const { data: user } = await supabase.auth.getUser();
-  console.log(data, 'data get user');
   if (!user) {
     return { success: false, message: 'Nie udało się pobrać danych użytkownika.' };
   }

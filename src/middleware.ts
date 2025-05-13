@@ -1,19 +1,22 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { updateSession } from './utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  try {
+    return await updateSession(request);
+  } catch (error) {
+    console.error('Middleware error:', error);
+    // Fallback to just continuing the request if session update fails
+    return NextResponse.next();
+  }
 }
+
 export const config = {
   matcher: [
+    // Only run middleware on admin routes that require authentication
     '/admin/dashboard/:path*',
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
+    '/admin/signin',
+    // Skip middleware for static files, API routes, etc.
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

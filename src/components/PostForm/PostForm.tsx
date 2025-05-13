@@ -83,10 +83,23 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
         bucket_name: bucket,
       };
 
-      // INSERT new post
-      const { data: insertedPost, error } = await supabase.from('blog').insert([blogPayload]).select();
-      console.log(insertedPost, 'data');
-      if (error) throw error;
+      // Handle create or update
+      if (!isEditing) {
+        const { data: insertedPost, error } = await supabase.from('blog').insert([blogPayload]).select();
+        if (error) throw error;
+        console.log('Created post:', insertedPost);
+      } else {
+        if (!defaultValues.id) throw new Error('Post ID is required for updates');
+
+        const { data: updatedPost, error } = await supabase
+          .from('blog')
+          .update(blogPayload)
+          .eq('id', defaultValues.id)
+          .select();
+
+        if (error) throw error;
+        console.log('Updated post:', updatedPost);
+      }
 
       // Redirect to dashboard
       router.push('/admin/dashboard');

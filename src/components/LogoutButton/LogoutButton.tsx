@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { FaSignOutAlt } from 'react-icons/fa';
 import { createClient } from '../../utils/supabase/client';
 
 export const LogoutButton = () => {
@@ -16,5 +17,10 @@ export const LogoutButton = () => {
     }
   }
 
-  return <button onClick={handleLogout}>Wyloguj</button>;
+  return (
+    <button onClick={handleLogout} className='logout-button'>
+      <FaSignOutAlt />
+      Wyloguj
+    </button>
+  );
 };

@@ -5,51 +5,22 @@ import { useState } from 'react';
 import { FaEdit, FaEllipsisH, FaTrashAlt } from 'react-icons/fa';
 import './styles.scss';
 
-// Mock data - in a real app, this would come from an API or database
-const posts = [
-  {
-    id: '1',
-    title: 'Getting Started with Next.js',
-    content: '<p>This is a sample blog post about Next.js...</p>',
-    status: 'published',
-    date: '2023-04-23',
-    featuredImage: '/placeholder.svg?height=300&width=500',
-  },
-  {
-    id: '2',
-    title: 'Understanding React Server Components',
-    content: '<p>Server Components are a new feature in React...</p>',
-    status: 'published',
-    date: '2023-05-15',
-    featuredImage: '/placeholder.svg?height=300&width=500',
-  },
-  {
-    id: '3',
-    title: 'The Future of Web Development',
-    content: '<p>Web development is constantly evolving...</p>',
-    status: 'draft',
-    date: '2023-06-02',
-    featuredImage: null,
-  },
-  {
-    id: '4',
-    title: 'Building a Blog with Next.js',
-    content: "<h2>Introduction</h2><p>In this tutorial, we'll build a blog...</p>",
-    status: 'published',
-    date: '2023-06-12',
-    featuredImage: '/placeholder.svg?height=300&width=500',
-  },
-  {
-    id: '5',
-    title: 'Advanced Tailwind CSS Techniques',
-    content: '<p>Tailwind CSS offers many advanced features...</p>',
-    status: 'draft',
-    date: '2023-06-20',
-    featuredImage: null,
-  },
-];
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  status: 'draft' | 'published';
+  created_at: string;
+  image_name: string;
+  bucket_name: string;
+}
 
-export function BlogTable() {
+interface BlogDataProps {
+  posts: BlogPost[];
+}
+
+export function BlogTable({ posts }: BlogDataProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
@@ -71,12 +42,8 @@ export function BlogTable() {
     setDropdownOpen(dropdownOpen === id ? null : id);
   };
 
-  // Function to strip HTML tags and truncate text
-  const stripHtmlAndTruncate = (html: string, maxLength = 50) => {
-    const tmp = document.createElement('DIV');
-    tmp.innerHTML = html;
-    const text = tmp.textContent || tmp.innerText || '';
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString();
   };
 
   return (
@@ -86,9 +53,10 @@ export function BlogTable() {
           <thead>
             <tr>
               <th>Title</th>
-              <th>Preview</th>
+              <th>Excerpt</th>
               <th>Status</th>
               <th>Date</th>
+              <th>Image</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,13 +64,14 @@ export function BlogTable() {
             {posts.map((post) => (
               <tr key={post.id}>
                 <td className='font-medium'>{post.title}</td>
-                <td className='text-secondary'>{stripHtmlAndTruncate(post.content)}</td>
+                <td className='text-secondary'>{post.excerpt}</td>
                 <td>
                   <span className={`badge badge--${post.status === 'published' ? 'primary' : 'secondary'}`}>
                     {post.status}
                   </span>
                 </td>
-                <td>{post.date}</td>
+                <td>{formatDate(post.created_at)}</td>
+                <td>{post.image_name || 'No image'}</td>
                 <td>
                   <div className='dropdown'>
                     <button

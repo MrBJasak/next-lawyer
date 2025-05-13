@@ -7,7 +7,6 @@ export default async function page() {
   const supabase = createClient();
   const { data: user, error: errorAuth } = await supabase.auth.getUser();
   const { data: blog, error } = await supabase.from('blog').select('*');
-  console.log('blog', blog);
   return (
     <div>
       <div className='dashboard__header-actions'>
@@ -24,7 +23,7 @@ export default async function page() {
           <div className='card__description'>Manage your blog posts</div>
         </div>
         <div className='card__content'>
-          <BlogTable />
+          <BlogTable posts={blog as any} />
         </div>
       </div>
     </div>

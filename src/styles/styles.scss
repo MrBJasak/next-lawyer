@@ -1,6 +1,6 @@
-@import './mixins';
-@import './fonts';
-@import './colors';
+@use './mixins' as *;
+@use './fonts' as *;
+@use './colors' as *;
 
 html,
 body,

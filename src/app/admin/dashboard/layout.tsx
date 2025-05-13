@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FaFileAlt, FaTachometerAlt } from 'react-icons/fa';
+import { TbFileCertificate } from 'react-icons/tb';
 import { LogoutButton } from '../../../components/Admin/SignIn/SignIn';
 import './layout.scss';
 
@@ -16,6 +17,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Link href='/admin/dashboard/posts'>
               <FaFileAlt />
               Posty
+            </Link>
+            <Link href='/admin/dashboard/certificates'>
+              <TbFileCertificate />
+              Certyfiakty
             </Link>
             <LogoutButton />
           </nav>
