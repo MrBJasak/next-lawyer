@@ -6,7 +6,7 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { createClient } from '../../utils/supabase/client';
 import './styles.scss';
 
-interface BlogPost {
+export interface BlogPost {
   id: string;
   title: string;
   excerpt: string;

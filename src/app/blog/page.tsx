@@ -33,13 +33,15 @@ export default function BlogPage() {
       }
 
       if (blog) {
-        const postsWithImages = blog.map((post: any) => {
-          const imageUrl = post.image_name
-            ? supabase.storage.from(post.bucket_name || BUCKET_NAME).getPublicUrl(post.image_name).data.publicUrl
+        const postsWithImages = blog.map((post) => {
+          const typedPost = post as BlogPost;
+          const imageUrl = typedPost.image_name
+            ? supabase.storage.from(typedPost.bucket_name || BUCKET_NAME).getPublicUrl(typedPost.image_name).data
+                .publicUrl
             : '';
 
           return {
-            ...post,
+            ...typedPost,
             image: imageUrl,
           };
         });
@@ -60,7 +62,7 @@ export default function BlogPage() {
           <BlogItem
             key={blogItem.id}
             excerpt={blogItem.excerpt}
-            id={blogItem.id}
+            id={blogItem.id.toString()}
             image={blogItem.image}
             title={blogItem.title}
           />

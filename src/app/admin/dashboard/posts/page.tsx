@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { FaPlusCircle } from 'react-icons/fa';
+import type { BlogPost } from '../../../../components/BlogTable/BlogTable';
 import { BlogTable } from '../../../../components/BlogTable/BlogTable';
 import { createClient } from '../../../../utils/supabase/client';
 
 export default async function page() {
   const supabase = createClient();
-  const { data: blog, error } = await supabase.from('blog').select('*');
+  const { data: blog } = await supabase.from('blog').select('*');
   return (
     <div>
       <div className='dashboard__header-actions'>
@@ -16,7 +17,7 @@ export default async function page() {
         </Link>
       </div>
 
-      <BlogTable posts={blog as any} />
+      <BlogTable posts={(blog ?? []) as BlogPost[]} />
     </div>
   );
 }

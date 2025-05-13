@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import { Button } from '../../../../components/Button/Buttons';
 import CertificatesTable from '../../../../components/CertifiactesTable/CertifiactesTable';
@@ -15,7 +15,7 @@ export default function CertificatesPage() {
   const [featuredImage, setFeaturedImage] = useState<File | null>(null);
   const supabase = createClient();
 
-  const fetchFiles = async () => {
+  const fetchFiles = useCallback(async () => {
     const { data, error } = await supabase.storage.from(CERTIFICATES_BUCKET_NAME).list('');
 
     if (!error && data) {
@@ -32,18 +32,18 @@ export default function CertificatesPage() {
     } else {
       console.error('Błąd przy pobieraniu certyfikatów:', error?.message);
     }
-  };
+  }, [supabase]);
 
   useEffect(() => {
     fetchFiles();
-  }, []);
+  }, [fetchFiles]);
 
   const uploadFeaturedImage = async () => {
     if (!featuredImage) return;
 
     const uploadedImageName = `${Date.now()}-${featuredImage.name}`;
 
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from(CERTIFICATES_BUCKET_NAME)
       .upload(uploadedImageName, featuredImage, {
         cacheControl: '3600',

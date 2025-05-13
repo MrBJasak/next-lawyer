@@ -38,7 +38,7 @@ export const Certificates = () => {
     }
 
     fetchImages();
-  }, []);
+  }, [supabase.storage]);
 
   return (
     <div>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { FaImage, FaTimesCircle, FaUpload } from 'react-icons/fa';
 import './styles.scss';
@@ -119,7 +120,7 @@ export function ImageUpload({ onImageUpload, onImageRemove, initialImage }: Imag
         </div>
       ) : (
         <div className='image-upload__preview'>
-          <img
+          <Image
             src={preview || '/placeholder.svg'}
             alt='Preview'
             className='image-upload__image'

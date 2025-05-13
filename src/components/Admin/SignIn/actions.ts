@@ -6,7 +6,7 @@ import { SignInCredentials } from './types';
 export async function login({ email, password }: SignInCredentials) {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { success: false, message: error.message };

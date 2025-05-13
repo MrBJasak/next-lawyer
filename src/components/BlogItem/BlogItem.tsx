@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import './styles.scss';
 
@@ -7,16 +8,14 @@ export interface BlogItemProps {
   id: string;
   title: string;
   excerpt: string;
-  image_name: string;
-  image?: string;
+  image: string;
 }
 
-export const BlogItem = ({ excerpt, id, image, title, image_name }: BlogItemProps) => {
-  console.log(image);
+export const BlogItem = ({ excerpt, id, image, title }: BlogItemProps) => {
   return (
     <div className='blog-item'>
       <div className='blog-item__image'>
-        <img src={image} width={600} height={400} alt={image_name} />
+        <Image src={image} width={600} height={400} alt='Blog post thumbnail' />
       </div>
       <div className='blog-item__content'>
         <h2 className='blog-item__title'>{title}</h2>

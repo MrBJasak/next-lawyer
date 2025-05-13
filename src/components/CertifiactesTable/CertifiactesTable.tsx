@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { createClient } from '../../utils/supabase/client';
@@ -61,7 +62,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
                       {cert.name}
                     </a>
                     <div className='hover-preview'>
-                      <img src={cert.publicUrl} alt={cert.name} />
+                      <Image src={cert.publicUrl} alt={cert.name} layout='fill' objectFit='cover' />
                     </div>
                   </div>
                 </td>
