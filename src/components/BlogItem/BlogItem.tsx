@@ -1,17 +1,18 @@
 'use client';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import './styles.scss';
 
 interface BlogItemProps {
   id: number;
-  image: StaticImageData;
+  image: string;
   title: string;
   excerpt: string;
 }
 
 export const BlogItem = ({ excerpt, id, image, title }: BlogItemProps) => {
+  console.log(image);
   return (
     <div className='blog-item'>
       <div className='blog-item__image'>

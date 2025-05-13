@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createClient } from '../../utils/supabase/client';
-import { BlogEditor } from '../BlogEditor/BlogEditor';
+
+import { BlogEditor } from '../BlogEditor';
 import { ImageUpload } from '../ImageUpload/ImageUpload';
 import './styles.scss';
 
@@ -71,7 +72,7 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
             upsert: false,
           });
         console.log(uploadData, 'uploadData');
-        if (uploadError) throw new Error(`Image upload failed: ${uploadError.message}`);
+        if (uploadError) throw new Error(`Przesyłanie obrazu nie powiodło się: ${uploadError.message}`);
       }
 
       const blogPayload = {
@@ -83,13 +84,12 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
         bucket_name: bucket,
       };
 
-      // Handle create or update
       if (!isEditing) {
         const { data: insertedPost, error } = await supabase.from('blog').insert([blogPayload]).select();
         if (error) throw error;
-        console.log('Created post:', insertedPost);
+        console.log('Utworzono wpis:', insertedPost);
       } else {
-        if (!defaultValues.id) throw new Error('Post ID is required for updates');
+        if (!defaultValues.id) throw new Error('ID wpisu jest wymagane do aktualizacji');
 
         const { data: updatedPost, error } = await supabase
           .from('blog')
@@ -98,13 +98,13 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
           .select();
 
         if (error) throw error;
-        console.log('Updated post:', updatedPost);
+        console.log('Zaktualizowano wpis:', updatedPost);
       }
 
       // Redirect to dashboard
       router.push('/admin/dashboard');
     } catch (error) {
-      console.error('Error saving post:', error);
+      console.error('Błąd podczas zapisywania wpisu:', error);
     }
   };
 
@@ -121,17 +121,22 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='form'>
       <div className='form-group'>
-        <label htmlFor='title'>Title</label>
-        <input id='title' type='text' placeholder='Enter post title' {...register('title', { required: true })} />
+        <label htmlFor='title'>Tytuł</label>
+        <input id='title' type='text' placeholder='Wprowadź tytuł wpisu' {...register('title', { required: true })} />
       </div>
 
       <div className='form-group'>
-        <label htmlFor='excerpt'>Excerpt</label>
-        <input id='excerpt' type='text' placeholder='Enter post excerpt' {...register('excerpt', { required: true })} />
+        <label htmlFor='excerpt'>Zajawka</label>
+        <input
+          id='excerpt'
+          type='text'
+          placeholder='Wprowadź zajawkę wpisu'
+          {...register('excerpt', { required: true })}
+        />
       </div>
 
       <div className='form-group'>
-        <label>Featured Image</label>
+        <label>Wyróżniony obraz</label>
         <ImageUpload
           onImageUpload={handleImageUpload}
           onImageRemove={handleImageRemove}
@@ -140,24 +145,24 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
       </div>
 
       <div className='form-group'>
-        <label htmlFor='content'>Content</label>
-        <BlogEditor content={watch('content')} onSave={(val) => setValue('content', val)} />
+        <label htmlFor='content'>Treść</label>
+        <BlogEditor content={watch('content')} onSave={(val: string) => setValue('content', val)} />
       </div>
 
       <div className='form-group'>
         <label htmlFor='status'>Status</label>
         <select id='status' {...register('status')}>
-          <option value='draft'>Draft</option>
-          <option value='published'>Published</option>
+          <option value='draft'>Szkic</option>
+          <option value='published'>Opublikowany</option>
         </select>
       </div>
 
       <div className='form-actions'>
         <button type='submit' className='button button--primary' disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : defaultValues.id ? 'Update Post' : 'Create Post'}
+          {isSubmitting ? 'Zapisywanie...' : defaultValues.id ? 'Aktualizuj wpis' : 'Utwórz wpis'}
         </button>
         <button type='button' className='button button--secondary' onClick={() => router.push('/admin/dashboard')}>
-          Cancel
+          Anuluj
         </button>
       </div>
     </form>
