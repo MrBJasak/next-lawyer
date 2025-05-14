@@ -51,9 +51,8 @@ export default function BlogPage() {
     };
 
     fetchBlogPosts();
-  }, [supabase]);
+  }, []);
 
-  console.log('Blog posts:', blogPosts);
   return (
     <div className='blog-page'>
       <AnimatedTitle>BLOG</AnimatedTitle>

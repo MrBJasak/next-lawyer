@@ -19,14 +19,12 @@ export const Certificates = () => {
         }
 
         if (!fileList || fileList.length === 0) {
-          console.log('No files found');
           return;
         }
 
         const urls = await Promise.all(
           fileList.map(async (file) => {
             const { data: urlData } = await supabase.storage.from(BUCKET_NAME).createSignedUrl(file.name, 60 * 60); // URL valid for 1 hour
-            console.log(urlData, 'urlData');
             return urlData?.signedUrl || '';
           }),
         );
@@ -38,7 +36,8 @@ export const Certificates = () => {
     }
 
     fetchImages();
-  }, [supabase.storage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

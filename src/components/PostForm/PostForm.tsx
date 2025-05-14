@@ -72,20 +72,24 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
         return;
       }
 
-      let uploadedImageName = defaultValues.featuredImage || '';
+      let uploadedImageName = '';
       const bucket = BUCKET_NAME;
 
       if (featuredImage) {
         uploadedImageName = `${Date.now()}-${featuredImage.name}`;
 
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from(bucket)
-          .upload(uploadedImageName, featuredImage, {
-            cacheControl: '3600',
-            upsert: false,
-          });
-        console.log(uploadData, 'uploadData');
+        const { error: uploadError } = await supabase.storage.from(bucket).upload(uploadedImageName, featuredImage, {
+          cacheControl: '3600',
+          upsert: false,
+        });
         if (uploadError) throw new Error(`Przesyłanie obrazu nie powiodło się: ${uploadError.message}`);
+      } else if (defaultValues.featuredImage) {
+        if (defaultValues.featuredImage.includes('https://')) {
+          const urlParts = defaultValues.featuredImage.split('/');
+          uploadedImageName = urlParts[urlParts.length - 1];
+        } else {
+          uploadedImageName = defaultValues.featuredImage;
+        }
       }
 
       if (!uploadedImageName) {
@@ -110,24 +114,17 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
       };
 
       if (!isEditing) {
-        const { data: insertedPost, error } = await supabase.from('blog').insert([blogPayload]).select();
+        const { error } = await supabase.from('blog').insert([blogPayload]).select();
         if (error) throw error;
-        console.log('Utworzono wpis:', insertedPost);
       } else {
         if (!defaultValues.id) throw new Error('ID wpisu jest wymagane do aktualizacji');
 
-        const { data: updatedPost, error } = await supabase
-          .from('blog')
-          .update(blogPayload)
-          .eq('id', defaultValues.id)
-          .select();
+        const { error } = await supabase.from('blog').update(blogPayload).eq('id', defaultValues.id).select();
 
         if (error) throw error;
-        console.log('Zaktualizowano wpis:', updatedPost);
       }
 
-      // Redirect to dashboard
-      router.push('/admin/dashboard');
+      router.push('/admin/dashboard/posts');
     } catch (error) {
       console.error('Błąd podczas zapisywania wpisu:', error);
     }

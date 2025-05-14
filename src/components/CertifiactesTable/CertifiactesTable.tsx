@@ -18,7 +18,6 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
 
   const confirmDelete = async () => {
     if (selectedCertificateName) {
-      console.log('Deleting certificate:', selectedCertificateName);
       await supabase.storage.from(CERTIFICATES_BUCKET_NAME).remove([selectedCertificateName]);
       onRefresh();
       setDeleteDialogOpen(false);

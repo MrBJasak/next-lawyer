@@ -99,12 +99,6 @@ $primary-hover: #0058c7;
     border-color 0.2s;
 }
 
-.button--primary {
-  background-color: $primary-color;
-  color: white;
-  border: none;
-}
-
 .button--primary:hover {
   background-color: $primary-hover;
 }

@@ -19,24 +19,35 @@ export interface BlogPost {
 
 interface BlogDataProps {
   posts: BlogPost[];
+  refetchBlogPosts: () => void;
 }
 
-export function BlogTable({ posts }: BlogDataProps) {
+export function BlogTable({ posts, refetchBlogPosts }: BlogDataProps) {
   const client = createClient();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [postToDelete, setPostToDelete] = useState<string | null>(null);
+  const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null);
 
-  const handleDelete = (id: string) => {
-    setPostToDelete(id);
+  const handleDelete = (post: BlogPost) => {
+    setPostToDelete(post);
     setDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
-    console.log(`Deleting post ${postToDelete}`);
-    client.from('blog').delete().eq('id', postToDelete);
+  const confirmDelete = async () => {
+    if (!postToDelete) return;
+
+    const { error: postError } = await client.from('blog').delete().eq('id', postToDelete.id);
+
+    if (postError) {
+      console.error('Error deleting post:', postError);
+      return;
+    }
+
+    await client.storage.from(postToDelete.bucket_name).remove([`${postToDelete.image_name}`]);
+
     setDeleteDialogOpen(false);
     setPostToDelete(null);
+    refetchBlogPosts();
   };
 
   const formatDate = (dateString: string) => {
@@ -49,12 +60,12 @@ export function BlogTable({ posts }: BlogDataProps) {
         <table className='table'>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Excerpt</th>
+              <th>Tytuł</th>
+              <th>Streszczenie</th>
               <th>Status</th>
-              <th>Date</th>
-              <th>Image</th>
-              <th>Actions</th>
+              <th>Data</th>
+              <th>Obrazek</th>
+              <th>Operacje</th>
             </tr>
           </thead>
           <tbody>
@@ -74,11 +85,7 @@ export function BlogTable({ posts }: BlogDataProps) {
                     <Link href={`/admin/dashboard/posts/${post.id}`} className='action-button edit-button' title='Edit'>
                       <FaEdit />
                     </Link>
-                    <button
-                      className='action-button delete-button'
-                      onClick={() => handleDelete(post.id)}
-                      title='Delete'
-                    >
+                    <button className='action-button delete-button' onClick={() => handleDelete(post)} title='Delete'>
                       <FaTrashAlt />
                     </button>
                   </div>
@@ -93,17 +100,17 @@ export function BlogTable({ posts }: BlogDataProps) {
         <div className='modal'>
           <div className='modal__content'>
             <div className='modal__content-header'>
-              <h3 className='modal__content-title'>Are you sure?</h3>
+              <h3 className='modal__content-title'>Czy na pewno chcesz usunąć post?</h3>
               <p className='modal__content-description'>
-                This action cannot be undone. This will permanently delete the post.
+                Nie można cofnąć tej akcji. Czy na pewno chcesz usunąć ten post?
               </p>
             </div>
             <div className='modal__content-footer'>
               <button className='button button--secondary' onClick={() => setDeleteDialogOpen(false)}>
-                Cancel
+                Anuluj
               </button>
               <button className='button button--primary' onClick={confirmDelete}>
-                Delete
+                Usuń
               </button>
             </div>
           </div>

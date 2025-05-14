@@ -16,5 +16,5 @@ export async function login({ email, password }: SignInCredentials) {
   if (!user) {
     return { success: false, message: 'Nie udało się pobrać danych użytkownika.' };
   }
-  redirect('/admin/dashboard');
+  redirect('/admin/dashboard/posts');
 }

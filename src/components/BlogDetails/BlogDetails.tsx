@@ -23,7 +23,6 @@ interface BlogDetailsProps {
 }
 
 export const BlogDetails: FC<BlogDetailsProps> = ({ id }) => {
-  console.log('BlogDetails component rendered with id:', id);
   const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const supabase = createClient();

@@ -72,28 +72,20 @@ export default function CertificatesPage() {
     <div>
       <div className='dashboard__header-actions'>
         <h1 className='dashboard__title'>Certyfikaty</h1>
-        <Button className='button button--primary' onClick={() => setShowModal(true)}>
+        <Button className='button' onClick={() => setShowModal(true)}>
           <FaPlusCircle />
           Dodaj nowy certifikat
         </Button>
       </div>
 
-      <div className='card'>
-        <div className='card__header'>
-          <h2 className='card__title'>Certyfikaty</h2>
-          <div className='card__description'>Zarządzaj certifikatami</div>
-        </div>
-        <div className='card__content'>
-          <CertificatesTable data={files} onRefresh={fetchFiles} />
-        </div>
-      </div>
+      <CertificatesTable data={files} onRefresh={fetchFiles} />
 
       {showModal && (
         <div className='modal'>
           <div className='modal__content'>
             <div className='modal__content-header'>
               <h3 className='modal__content-title'>Dodaj certyfikat</h3>
-              <button onClick={() => setShowModal(false)}>✕</button>
+              <Button onClick={() => setShowModal(false)}>✕</Button>
             </div>
             <div className='modal__content-body'>
               <label>Obraz certyfikatu</label>

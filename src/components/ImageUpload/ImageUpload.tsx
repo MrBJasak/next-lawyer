@@ -114,16 +114,19 @@ export function ImageUpload({ onImageUpload, onImageRemove, initialImage }: Imag
             </div>
             <div className='image-upload__button'>
               <FaUpload />
-              <span>Upload Image</span>
+              <span>Dodaj zdjęcie</span>
             </div>
           </div>
         </div>
       ) : (
         <div className='image-upload__preview'>
           <Image
-            src={preview || '/placeholder.svg'}
+            src={preview}
             alt='Preview'
             className='image-upload__image'
+            width={300}
+            height={200}
+            unoptimized={preview.startsWith('data:')}
             onLoad={(e) => {
               // Adjust image display based on aspect ratio
               const img = e.target as HTMLImageElement;
@@ -136,7 +139,7 @@ export function ImageUpload({ onImageUpload, onImageRemove, initialImage }: Imag
           />
           <button type='button' className='image-upload__remove' onClick={removeImage}>
             <FaTimesCircle />
-            <span>Remove</span>
+            <span>Usuń</span>
           </button>
         </div>
       )}
