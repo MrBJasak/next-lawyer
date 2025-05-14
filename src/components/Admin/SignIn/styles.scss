@@ -1,0 +1,112 @@
+@import '../../../styles/_colors.scss';
+
+.signin-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: $color-bgc;
+}
+
+.background {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: -1;
+  top: 70%;
+  left: 50%;
+  right: 0;
+  bottom: -30vh;
+  translate: -50% 0;
+  width: 150vw;
+}
+
+.login {
+  position: relative;
+  z-index: 2;
+  background: rgba(7, 23, 24, 0.25);
+  backdrop-filter: blur(38px);
+  box-shadow: 0 40px 30px rgb(0 0 0 / 10%);
+  border-radius: 40px;
+  padding: 32px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.login-title {
+  color: rgb(0, 80, 40);
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.textbox {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  translate: 0 -50%;
+  transform-origin: 0 50%;
+  pointer-events: none;
+  color: $color-muted;
+  transition: 0.4s;
+}
+
+.input-field {
+  width: 100%;
+  height: 56px;
+  font-size: 16px;
+  padding: 10px 16px 0;
+  background: #ffffff;
+  border-radius: 8px;
+  outline: none;
+  color: #000;
+  box-shadow: 0 0 0 2px transparent;
+  transition: 0.4s;
+}
+
+.input-field:focus {
+  box-shadow: 0 0 0 2px $color-primary;
+}
+
+.input-field:is(:focus, :not(:invalid)) ~ .label {
+  scale: 0.725;
+  translate: 0 -112%;
+}
+
+.btn {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  font-size: 17px;
+  font-family: inherit;
+  color: #f9f9f9;
+  background: $color-primary;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: left;
+}

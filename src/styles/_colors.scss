@@ -1,4 +1,14 @@
+// Base colors
 $dark-green: #167236;
 $night: #06150a;
 $white: #fff;
+$black: #000000;
 $lawyer: #005028;
+$gray: #6c757d;
+
+// Theme colors
+$color-primary: $lawyer;
+$color-muted: rgba($lawyer, 0.6);
+$color-bgc: #1c1c1c;
+$color-text: $black;
+$color-border: $gray;

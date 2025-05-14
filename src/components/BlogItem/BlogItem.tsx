@@ -1,14 +1,14 @@
 'use client';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import './styles.scss';
 
-interface BlogItemProps {
-  id: number;
-  image: StaticImageData;
+export interface BlogItemProps {
+  id: string;
   title: string;
   excerpt: string;
+  image: string;
 }
 
 export const BlogItem = ({ excerpt, id, image, title }: BlogItemProps) => {
