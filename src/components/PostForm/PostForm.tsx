@@ -148,11 +148,11 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
       </div>
 
       <div className='form-group'>
-        <label htmlFor='excerpt'>Zajawka</label>
+        <label htmlFor='excerpt'>Streszczenie</label>
         <input
           id='excerpt'
           type='text'
-          placeholder='Wprowadź zajawkę wpisu'
+          placeholder='Wprowadź streszczenie wpisu'
           {...register('excerpt', { required: true })}
         />
       </div>
