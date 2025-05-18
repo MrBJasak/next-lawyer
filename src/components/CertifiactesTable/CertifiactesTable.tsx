@@ -38,6 +38,18 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  const truncateFilename = (filename: string, maxLength = 20) => {
+    if (!filename) return '';
+    if (filename.length <= maxLength) return filename;
+
+    // Get file extension
+    const lastDotIndex = filename.lastIndexOf('.');
+    const ext = lastDotIndex !== -1 ? filename.slice(lastDotIndex) : '';
+
+    // Truncate name and add extension
+    return filename.slice(0, maxLength - ext.length - 3) + '...' + ext;
+  };
+
   return (
     <>
       <div className='table-container'>
@@ -55,22 +67,30 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
           <tbody>
             {data.map((cert) => (
               <tr key={cert.id}>
-                <td className='font-medium'>
+                <td className='font-medium' data-label='Name'>
                   <div className='file-name-hover'>
-                    <a href={cert.publicUrl} target='_blank' rel='noopener noreferrer'>
-                      {cert.name}
+                    <a href={cert.publicUrl} target='_blank' rel='noopener noreferrer' title={cert.name}>
+                      {truncateFilename(cert.name, 25)}
                     </a>
                     <div className='hover-preview'>
-                      <Image src={cert.publicUrl} alt={cert.name} layout='fill' objectFit='cover' />
+                      <Image
+                        src={cert.publicUrl}
+                        alt={cert.name}
+                        width={150}
+                        height={150}
+                        style={{ objectFit: 'contain' }}
+                      />
                     </div>
                   </div>
                 </td>
-                <td>{formatFileSize(cert.metadata.size)}</td>
-                <td>{cert.metadata.mimetype}</td>
-                <td>{new Date(cert.created_at).toLocaleDateString()}</td>
-                <td>{new Date(cert.updated_at).toLocaleDateString()}</td>
-                <td>
-                  <FaTrashAlt onClick={() => handleDelete(cert.name)} />
+                <td data-label='Size'>{formatFileSize(cert.metadata.size)}</td>
+                <td data-label='Type'>{cert.metadata.mimetype}</td>
+                <td data-label='Created At'>{new Date(cert.created_at).toLocaleDateString()}</td>
+                <td data-label='Last Modified'>{new Date(cert.updated_at).toLocaleDateString()}</td>
+                <td data-label='Actions'>
+                  <div className='action-button delete-button'>
+                    <FaTrashAlt onClick={() => handleDelete(cert.name)} />
+                  </div>
                 </td>
               </tr>
             ))}

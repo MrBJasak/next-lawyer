@@ -54,6 +54,18 @@ export function BlogTable({ posts, refetchBlogPosts }: BlogDataProps) {
     return new Date(dateString).toLocaleDateString();
   };
 
+  const truncateFilename = (filename: string, maxLength = 25) => {
+    if (!filename) return 'No image';
+    if (filename.length <= maxLength) return filename;
+
+    // Get file extension
+    const lastDotIndex = filename.lastIndexOf('.');
+    const ext = lastDotIndex !== -1 ? filename.slice(lastDotIndex) : '';
+
+    // Truncate name and add extension
+    return filename.slice(0, maxLength - ext.length - 3) + '...' + ext;
+  };
+
   return (
     <>
       <div className='table-container'>
@@ -71,16 +83,22 @@ export function BlogTable({ posts, refetchBlogPosts }: BlogDataProps) {
           <tbody>
             {posts.map((post) => (
               <tr key={post.id}>
-                <td className='font-medium'>{post.title}</td>
-                <td className='text-secondary'>{post.excerpt}</td>
-                <td>
+                <td className='font-medium' data-label='Tytuł'>
+                  {post.title}
+                </td>
+                <td className='text-secondary' data-label='Streszczenie'>
+                  {post.excerpt}
+                </td>
+                <td data-label='Status'>
                   <span className={`badge badge--${post.status === 'published' ? 'primary' : 'secondary'}`}>
                     {post.status}
                   </span>
                 </td>
-                <td>{formatDate(post.created_at)}</td>
-                <td>{post.image_name || 'No image'}</td>
-                <td>
+                <td data-label='Data'>{formatDate(post.created_at)}</td>
+                <td className='image-cell' data-label='Obrazek'>
+                  <span title={post.image_name || 'No image'}>{truncateFilename(post.image_name)}</span>
+                </td>
+                <td data-label='Operacje'>
                   <div className='action-buttons'>
                     <Link href={`/admin/dashboard/posts/${post.id}`} className='action-button edit-button' title='Edit'>
                       <FaEdit />

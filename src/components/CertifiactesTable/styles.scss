@@ -3,6 +3,8 @@
 .table-container {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
+  overflow: hidden;
+  overflow-x: auto; /* Enable horizontal scrolling for smaller screens */
 }
 
 .table {
@@ -17,6 +19,14 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+/* File name styling */
+td .file-name-hover {
+  max-width: 200px;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
 .table th {
   font-weight: 600;
   font-size: 0.875rem;
@@ -26,6 +36,87 @@
 
 .table tr:last-child td {
   border-bottom: none;
+}
+
+/* Action buttons style */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-button:hover {
+  background-color: var(--muted-color);
+}
+
+.delete-button:hover {
+  color: var(--error-color, #dc2626);
+  border-color: var(--error-color, #dc2626);
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .table th,
+  .table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    border: none;
+    overflow: visible;
+  }
+
+  .table {
+    display: block;
+  }
+
+  .table thead {
+    display: none; /* Hide the table header on mobile */
+  }
+
+  .table tbody {
+    display: block;
+  }
+
+  .table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: right;
+    align-items: flex-start;
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  .table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-right: 1rem;
+  }
 }
 
 .badge {
@@ -150,10 +241,43 @@
   padding: 1.25rem 1.5rem;
   border-top: 1px solid var(--border-color);
 }
+
+@media (max-width: 480px) {
+  .modal__content {
+    max-width: 95%;
+    margin: 0 0.5rem;
+  }
+
+  .modal__content-header,
+  .modal__content-footer {
+    padding: 1rem;
+  }
+
+  .modal__content-title {
+    font-size: 1.1rem;
+  }
+
+  .modal__content-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal__content-footer button {
+    width: 100%;
+  }
+}
 .file-name-hover {
   position: relative;
   display: inline-block;
   cursor: pointer;
+  max-width: 100%;
+
+  a {
+    display: inline-block;
+    max-width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
 
   .hover-preview {
     display: none;
@@ -176,5 +300,15 @@
 
   &:hover .hover-preview {
     display: block;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 65%;
+    margin-left: auto;
+
+    .hover-preview {
+      left: auto;
+      right: 0;
+    }
   }
 }
