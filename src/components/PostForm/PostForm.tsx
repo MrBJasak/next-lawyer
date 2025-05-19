@@ -10,6 +10,40 @@ import { BlogEditor } from '../BlogEditor';
 import { ImageUpload } from '../ImageUpload/ImageUpload';
 import './styles.scss';
 
+// Function to sanitize file names for Supabase storage
+const sanitizeFileName = (fileName: string): string => {
+  // Remove Polish diacritics and special characters
+  const sanitized = fileName
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+    .replace(/[ąćęłńóśźż]/gi, (match) => {
+      const replaceMap: Record<string, string> = {
+        ą: 'a',
+        ć: 'c',
+        ę: 'e',
+        ł: 'l',
+        ń: 'n',
+        ó: 'o',
+        ś: 's',
+        ź: 'z',
+        ż: 'z',
+        Ą: 'A',
+        Ć: 'C',
+        Ę: 'E',
+        Ł: 'L',
+        Ń: 'N',
+        Ó: 'O',
+        Ś: 'S',
+        Ź: 'Z',
+        Ż: 'Z',
+      };
+      return replaceMap[match] || match;
+    })
+    .replace(/[^a-zA-Z0-9.\-_]/g, '_'); // Replace other special chars with underscore
+
+  return sanitized;
+};
+
 interface PostFormProps {
   defaultValues?: {
     id?: string;
@@ -76,7 +110,9 @@ export function PostForm({ defaultValues = {}, isEditing = false }: PostFormProp
       const bucket = BUCKET_NAME;
 
       if (featuredImage) {
-        uploadedImageName = `${Date.now()}-${featuredImage.name}`;
+        // Sanitize the filename before uploading
+        const sanitizedFileName = sanitizeFileName(featuredImage.name);
+        uploadedImageName = `${Date.now()}-${sanitizedFileName}`;
 
         const { error: uploadError } = await supabase.storage.from(bucket).upload(uploadedImageName, featuredImage, {
           cacheControl: '3600',
