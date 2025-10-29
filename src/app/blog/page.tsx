@@ -21,9 +21,9 @@ interface BlogPost {
 
 export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
     const fetchBlogPosts = async () => {
       const { data: blog, error } = await supabase.from('blog').select('*').eq('status', 'published');
 
@@ -46,7 +46,10 @@ export default function BlogPage() {
           };
         });
 
-        setBlogPosts(postsWithImages);
+        const sorted = postsWithImages.sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+        );
+        setBlogPosts(sorted);
       }
     };
 
@@ -56,7 +59,7 @@ export default function BlogPage() {
   return (
     <div className='blog-page'>
       <AnimatedTitle>BLOG</AnimatedTitle>
-      <div className='blog-page__grid'>
+      <div className='blog-page__list'>
         {blogPosts.map((blogItem: BlogPost) => (
           <BlogItem
             key={blogItem.id}
@@ -64,6 +67,7 @@ export default function BlogPage() {
             id={blogItem.id.toString()}
             image={blogItem.image}
             title={blogItem.title}
+            createdAt={blogItem.created_at}
           />
         ))}
       </div>
