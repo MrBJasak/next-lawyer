@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import { FaTrashAlt, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaTrashAlt } from 'react-icons/fa';
 import { createClient } from '../../utils/supabase/client';
 import { Certificate, CERTIFICATES_BUCKET_NAME } from '../../utils/supabase/types';
 import './styles.scss';
@@ -36,9 +36,12 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
   };
 
   const handleMoveUp = async (cert: Certificate) => {
-    if (!cert.db_id || !cert.display_order || cert.display_order === 0) return;
+    if (!cert.db_id || cert.display_order === undefined) return;
 
     const currentOrder = cert.display_order;
+    // Nie można przesunąć w górę jeśli już jest na pierwszej pozycji (order 0)
+    if (currentOrder === 0) return;
+
     const previousCert = data.find((c) => c.display_order === currentOrder - 1);
     if (!previousCert?.db_id) return;
 
@@ -49,10 +52,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
         .update({ display_order: currentOrder - 1 })
         .eq('id', cert.db_id);
 
-      await supabase
-        .from('certificates')
-        .update({ display_order: currentOrder })
-        .eq('id', previousCert.db_id);
+      await supabase.from('certificates').update({ display_order: currentOrder }).eq('id', previousCert.db_id);
 
       onRefresh();
     } catch (error) {
@@ -65,6 +65,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
 
     const currentOrder = cert.display_order;
     const nextCert = data.find((c) => c.display_order === currentOrder + 1);
+    // Nie można przesunąć w dół jeśli nie ma następnego elementu
     if (!nextCert?.db_id) return;
 
     try {
@@ -74,10 +75,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
         .update({ display_order: currentOrder + 1 })
         .eq('id', cert.db_id);
 
-      await supabase
-        .from('certificates')
-        .update({ display_order: currentOrder })
-        .eq('id', nextCert.db_id);
+      await supabase.from('certificates').update({ display_order: currentOrder }).eq('id', nextCert.db_id);
 
       onRefresh();
     } catch (error) {
@@ -126,23 +124,29 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((cert, index) => (
+            {data.map((cert) => (
               <tr key={cert.id}>
                 <td data-label='Kolejność'>
                   <div className='order-controls'>
                     <button
                       className='action-button order-button'
                       onClick={() => handleMoveUp(cert)}
-                      disabled={index === 0 || !cert.db_id}
+                      disabled={!cert.db_id || cert.display_order === undefined || cert.display_order === 0}
                       title='Przesuń w górę'
                     >
                       <FaArrowUp />
                     </button>
-                    <span className='order-number'>{cert.display_order ?? 'N/A'}</span>
+                    <span className='order-number'>
+                      {cert.display_order !== undefined ? cert.display_order + 1 : 'N/A'}
+                    </span>
                     <button
                       className='action-button order-button'
                       onClick={() => handleMoveDown(cert)}
-                      disabled={index === data.length - 1 || !cert.db_id}
+                      disabled={
+                        !cert.db_id ||
+                        cert.display_order === undefined ||
+                        !data.find((c) => c.display_order === (cert.display_order ?? 0) + 1 && c.db_id)
+                      }
                       title='Przesuń w dół'
                     >
                       <FaArrowDown />

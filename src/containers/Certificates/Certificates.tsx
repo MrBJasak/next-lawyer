@@ -53,13 +53,18 @@ export const Certificates = () => {
 
         // Sortuj po display_order (rosnąco), potem po created_at dla plików bez rekordu
         const sortedFileList = filesWithOrder.sort((a, b) => {
-          if (a.display_order !== b.display_order) {
-            return (a.display_order || 9999) - (b.display_order || 9999);
+          const orderA = typeof a.display_order === 'number' ? a.display_order : 9999;
+          const orderB = typeof b.display_order === 'number' ? b.display_order : 9999;
+
+          // Najpierw sortuj po display_order
+          if (orderA !== orderB) {
+            return orderA - orderB;
           }
-          // Jeśli display_order jest takie samo, sortuj po dacie (najnowsze pierwsze)
+
+          // Jeśli display_order jest takie samo, sortuj po dacie (najstarsze pierwsze)
           const dateA = new Date(a.created_at).getTime();
           const dateB = new Date(b.created_at).getTime();
-          return dateB - dateA;
+          return dateA - dateB;
         });
 
         const urls = await Promise.all(

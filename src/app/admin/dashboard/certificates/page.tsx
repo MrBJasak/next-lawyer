@@ -60,11 +60,19 @@ export default function CertificatesPage() {
         const dbRecord = dbRecords?.find((r) => r.file_name === file.name);
         const publicUrl = supabase.storage.from(CERTIFICATES_BUCKET_NAME).getPublicUrl(file.name).data.publicUrl;
 
+        const displayOrder = dbRecord?.display_order ?? 9999;
+        const dbId = dbRecord?.id;
+
+        // Logowanie dla debugowania
+        console.log(
+          `📄 Plik: ${file.name} | display_order z bazy: ${dbRecord?.display_order ?? 'brak'} | db_id: ${dbId ?? 'brak'}`,
+        );
+
         return {
           ...file,
           publicUrl,
-          display_order: dbRecord?.display_order ?? 9999, // Pliki bez rekordu w bazie na końcu
-          db_id: dbRecord?.id,
+          display_order: typeof displayOrder === 'number' ? displayOrder : 9999,
+          db_id: dbId,
           metadata: {
             size: file.metadata?.size || 0,
             mimetype: file.metadata?.mimetype || 'application/octet-stream',
@@ -73,15 +81,40 @@ export default function CertificatesPage() {
         };
       });
 
+      console.log(
+        '🔍 Przed sortowaniem - display_order values:',
+        filesWithUrls.map((f) => f.display_order),
+      );
+
       // Sortuj po display_order (rosnąco), potem po created_at dla plików bez rekordu
       const sorted = filesWithUrls.sort((a, b) => {
-        if (a.display_order !== b.display_order) {
-          return (a.display_order || 9999) - (b.display_order || 9999);
+        const orderA = typeof a.display_order === 'number' ? a.display_order : 9999;
+        const orderB = typeof b.display_order === 'number' ? b.display_order : 9999;
+
+        console.log(`🔀 Sortowanie: ${a.name} (${orderA}) vs ${b.name} (${orderB})`);
+
+        // Najpierw sortuj po display_order
+        if (orderA !== orderB) {
+          return orderA - orderB;
         }
-        // Jeśli display_order jest takie samo, sortuj po dacie (najnowsze pierwsze)
+
+        // Jeśli display_order jest takie samo, sortuj po dacie (najstarsze pierwsze)
         const dateA = new Date(a.created_at).getTime();
         const dateB = new Date(b.created_at).getTime();
-        return dateB - dateA;
+        return dateA - dateB;
+      });
+
+      console.log(
+        '🔍 Po sortowaniu - display_order values:',
+        sorted.map((f) => f.display_order),
+      );
+
+      // Logowanie dla debugowania
+      console.log('📋 Certyfikaty po sortowaniu:');
+      sorted.forEach((cert, index) => {
+        console.log(
+          `${index + 1}. ${cert.name} - display_order: ${cert.display_order ?? 'undefined'}, db_id: ${cert.db_id ?? 'brak'}`,
+        );
       });
 
       setFiles(sorted);
