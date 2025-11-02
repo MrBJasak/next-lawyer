@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import { createClient } from '../../utils/supabase/client';
 import { Certificate, CERTIFICATES_BUCKET_NAME } from '../../utils/supabase/types';
 import './styles.scss';
@@ -18,10 +18,70 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
 
   const confirmDelete = async () => {
     if (selectedCertificateName) {
+      // Usuń plik ze storage
       await supabase.storage.from(CERTIFICATES_BUCKET_NAME).remove([selectedCertificateName]);
+
+      // Spróbuj usunąć rekord z bazy danych (może nie istnieć)
+      try {
+        await supabase.from('certificates').delete().eq('file_name', selectedCertificateName);
+      } catch (error) {
+        // Ignoruj błędy - tabela może nie istnieć jeszcze
+        console.warn('Nie można usunąć rekordu z bazy (tabela może nie istnieć)');
+      }
+
       onRefresh();
       setDeleteDialogOpen(false);
       setSelectedCertificateName(null);
+    }
+  };
+
+  const handleMoveUp = async (cert: Certificate) => {
+    if (!cert.db_id || !cert.display_order || cert.display_order === 0) return;
+
+    const currentOrder = cert.display_order;
+    const previousCert = data.find((c) => c.display_order === currentOrder - 1);
+    if (!previousCert?.db_id) return;
+
+    try {
+      // Zamień display_order między dwoma certyfikatami
+      await supabase
+        .from('certificates')
+        .update({ display_order: currentOrder - 1 })
+        .eq('id', cert.db_id);
+
+      await supabase
+        .from('certificates')
+        .update({ display_order: currentOrder })
+        .eq('id', previousCert.db_id);
+
+      onRefresh();
+    } catch (error) {
+      console.error('Błąd przy zmianie kolejności:', error);
+    }
+  };
+
+  const handleMoveDown = async (cert: Certificate) => {
+    if (!cert.db_id || cert.display_order === undefined) return;
+
+    const currentOrder = cert.display_order;
+    const nextCert = data.find((c) => c.display_order === currentOrder + 1);
+    if (!nextCert?.db_id) return;
+
+    try {
+      // Zamień display_order między dwoma certyfikatami
+      await supabase
+        .from('certificates')
+        .update({ display_order: currentOrder + 1 })
+        .eq('id', cert.db_id);
+
+      await supabase
+        .from('certificates')
+        .update({ display_order: currentOrder })
+        .eq('id', nextCert.db_id);
+
+      onRefresh();
+    } catch (error) {
+      console.error('Błąd przy zmianie kolejności:', error);
     }
   };
 
@@ -56,6 +116,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
         <table className='table'>
           <thead>
             <tr>
+              <th>Kolejność</th>
               <th>Name</th>
               <th>Size</th>
               <th>Type</th>
@@ -65,8 +126,29 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((cert) => (
+            {data.map((cert, index) => (
               <tr key={cert.id}>
+                <td data-label='Kolejność'>
+                  <div className='order-controls'>
+                    <button
+                      className='action-button order-button'
+                      onClick={() => handleMoveUp(cert)}
+                      disabled={index === 0 || !cert.db_id}
+                      title='Przesuń w górę'
+                    >
+                      <FaArrowUp />
+                    </button>
+                    <span className='order-number'>{cert.display_order ?? 'N/A'}</span>
+                    <button
+                      className='action-button order-button'
+                      onClick={() => handleMoveDown(cert)}
+                      disabled={index === data.length - 1 || !cert.db_id}
+                      title='Przesuń w dół'
+                    >
+                      <FaArrowDown />
+                    </button>
+                  </div>
+                </td>
                 <td className='font-medium' data-label='Name'>
                   <div className='file-name-hover'>
                     <a href={cert.publicUrl} target='_blank' rel='noopener noreferrer' title={cert.name}>

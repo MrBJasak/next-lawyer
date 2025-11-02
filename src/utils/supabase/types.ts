@@ -26,6 +26,8 @@ export interface Certificate {
   created_at: string;
   last_accessed_at: string;
   publicUrl: string;
+  display_order?: number;
+  db_id?: string;
   metadata: {
     size: number;
     mimetype: string;
