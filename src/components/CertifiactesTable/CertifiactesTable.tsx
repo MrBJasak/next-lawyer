@@ -18,14 +18,11 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
 
   const confirmDelete = async () => {
     if (selectedCertificateName) {
-      // Usuń plik ze storage
       await supabase.storage.from(CERTIFICATES_BUCKET_NAME).remove([selectedCertificateName]);
 
-      // Spróbuj usunąć rekord z bazy danych (może nie istnieć)
       try {
         await supabase.from('certificates').delete().eq('file_name', selectedCertificateName);
       } catch {
-        // Ignoruj błędy - tabela może nie istnieć jeszcze
         console.warn('Nie można usunąć rekordu z bazy (tabela może nie istnieć)');
       }
 
@@ -39,14 +36,12 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
     if (!cert.db_id || cert.display_order === undefined) return;
 
     const currentOrder = cert.display_order;
-    // Nie można przesunąć w górę jeśli już jest na pierwszej pozycji (order 0)
     if (currentOrder === 0) return;
 
     const previousCert = data.find((c) => c.display_order === currentOrder - 1);
     if (!previousCert?.db_id) return;
 
     try {
-      // Zamień display_order między dwoma certyfikatami
       await supabase
         .from('certificates')
         .update({ display_order: currentOrder - 1 })
@@ -65,11 +60,9 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
 
     const currentOrder = cert.display_order;
     const nextCert = data.find((c) => c.display_order === currentOrder + 1);
-    // Nie można przesunąć w dół jeśli nie ma następnego elementu
     if (!nextCert?.db_id) return;
 
     try {
-      // Zamień display_order między dwoma certyfikatami
       await supabase
         .from('certificates')
         .update({ display_order: currentOrder + 1 })
@@ -100,11 +93,9 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
     if (!filename) return '';
     if (filename.length <= maxLength) return filename;
 
-    // Get file extension
     const lastDotIndex = filename.lastIndexOf('.');
     const ext = lastDotIndex !== -1 ? filename.slice(lastDotIndex) : '';
 
-    // Truncate name and add extension
     return filename.slice(0, maxLength - ext.length - 3) + '...' + ext;
   };
 

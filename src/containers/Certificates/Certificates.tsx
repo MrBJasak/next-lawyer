@@ -13,7 +13,6 @@ export const Certificates = () => {
   useEffect(() => {
     async function fetchImages() {
       try {
-        // Pobierz pliki ze storage
         const { data: fileList, error: listError } = await supabase.storage.from(BUCKET_NAME).list('');
 
         if (listError) {
@@ -23,7 +22,6 @@ export const Certificates = () => {
 
         if (!fileList || fileList.length === 0) return;
 
-        // Pobierz metadane z bazy danych (opcjonalne - może nie istnieć)
         let dbRecords: Array<{ id: string; file_name: string; display_order: number }> | null = null;
         try {
           const { data, error: dbError } = await supabase
@@ -32,17 +30,14 @@ export const Certificates = () => {
             .order('display_order', { ascending: true });
 
           if (dbError) {
-            // Tabela może nie istnieć jeszcze - to normalne przed migracją
             console.warn('Tabela certificates nie istnieje (użycie domyślnego sortowania)');
           } else {
             dbRecords = data;
           }
         } catch {
-          // Ignoruj błędy związane z nieistniejącą tabelą
           console.warn('Nie można połączyć się z tabelą certificates (użycie domyślnego sortowania)');
         }
 
-        // Połącz dane i przypisz display_order
         const filesWithOrder = fileList.map((file) => {
           const dbRecord = dbRecords?.find((r) => r.file_name === file.name);
           return {
@@ -51,17 +46,14 @@ export const Certificates = () => {
           };
         });
 
-        // Sortuj po display_order (rosnąco), potem po created_at dla plików bez rekordu
         const sortedFileList = filesWithOrder.sort((a, b) => {
           const orderA = typeof a.display_order === 'number' ? a.display_order : 9999;
           const orderB = typeof b.display_order === 'number' ? b.display_order : 9999;
 
-          // Najpierw sortuj po display_order
           if (orderA !== orderB) {
             return orderA - orderB;
           }
 
-          // Jeśli display_order jest takie samo, sortuj po dacie (najstarsze pierwsze)
           const dateA = new Date(a.created_at).getTime();
           const dateB = new Date(b.created_at).getTime();
           return dateA - dateB;
@@ -71,7 +63,7 @@ export const Certificates = () => {
           sortedFileList.map(async (file) => {
             const { data: urlData, error } = await supabase.storage
               .from(BUCKET_NAME)
-              .createSignedUrl(file.name, 60 * 60); // ważny 1h
+              .createSignedUrl(file.name, 60 * 60);
 
             if (error) {
               console.error('Error creating signed URL:', error);

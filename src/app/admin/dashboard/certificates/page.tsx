@@ -19,7 +19,6 @@ export default function CertificatesPage() {
 
   const fetchFiles = useCallback(async () => {
     try {
-      // Pobierz pliki ze storage
       const { data: storageFiles, error: storageError } = await supabase.storage
         .from(CERTIFICATES_BUCKET_NAME)
         .list('');
@@ -33,7 +32,6 @@ export default function CertificatesPage() {
         return;
       }
 
-      // Pobierz metadane z bazy danych (opcjonalne - może nie istnieć)
       let dbRecords: Array<{ id: string; file_name: string; display_order: number }> | null = null;
       try {
         const { data, error: dbError } = await supabase
@@ -42,7 +40,6 @@ export default function CertificatesPage() {
           .order('display_order', { ascending: true });
 
         if (dbError) {
-          // Tabela może nie istnieć jeszcze - to normalne przed migracją
           console.warn(
             'Tabela certificates nie istnieje lub błąd dostępu (użycie domyślnego sortowania):',
             dbError.message,
@@ -51,22 +48,15 @@ export default function CertificatesPage() {
           dbRecords = data;
         }
       } catch {
-        // Ignoruj błędy związane z nieistniejącą tabelą
         console.warn('Nie można połączyć się z tabelą certificates (użycie domyślnego sortowania)');
       }
 
-      // Połącz dane ze storage z danymi z bazy
       const filesWithUrls = storageFiles.map((file) => {
         const dbRecord = dbRecords?.find((r) => r.file_name === file.name);
         const publicUrl = supabase.storage.from(CERTIFICATES_BUCKET_NAME).getPublicUrl(file.name).data.publicUrl;
 
         const displayOrder = dbRecord?.display_order ?? 9999;
         const dbId = dbRecord?.id;
-
-        // Logowanie dla debugowania
-        console.log(
-          `📄 Plik: ${file.name} | display_order z bazy: ${dbRecord?.display_order ?? 'brak'} | db_id: ${dbId ?? 'brak'}`,
-        );
 
         return {
           ...file,
@@ -81,40 +71,17 @@ export default function CertificatesPage() {
         };
       });
 
-      console.log(
-        '🔍 Przed sortowaniem - display_order values:',
-        filesWithUrls.map((f) => f.display_order),
-      );
-
-      // Sortuj po display_order (rosnąco), potem po created_at dla plików bez rekordu
       const sorted = filesWithUrls.sort((a, b) => {
         const orderA = typeof a.display_order === 'number' ? a.display_order : 9999;
         const orderB = typeof b.display_order === 'number' ? b.display_order : 9999;
 
-        console.log(`🔀 Sortowanie: ${a.name} (${orderA}) vs ${b.name} (${orderB})`);
-
-        // Najpierw sortuj po display_order
         if (orderA !== orderB) {
           return orderA - orderB;
         }
 
-        // Jeśli display_order jest takie samo, sortuj po dacie (najstarsze pierwsze)
         const dateA = new Date(a.created_at).getTime();
         const dateB = new Date(b.created_at).getTime();
         return dateA - dateB;
-      });
-
-      console.log(
-        '🔍 Po sortowaniu - display_order values:',
-        sorted.map((f) => f.display_order),
-      );
-
-      // Logowanie dla debugowania
-      console.log('📋 Certyfikaty po sortowaniu:');
-      sorted.forEach((cert, index) => {
-        console.log(
-          `${index + 1}. ${cert.name} - display_order: ${cert.display_order ?? 'undefined'}, db_id: ${cert.db_id ?? 'brak'}`,
-        );
       });
 
       setFiles(sorted);
@@ -132,7 +99,6 @@ export default function CertificatesPage() {
 
     const uploadedImageName = `${Date.now()}-${featuredImage.name}`;
 
-    // Upload do storage
     const { error: uploadError } = await supabase.storage
       .from(CERTIFICATES_BUCKET_NAME)
       .upload(uploadedImageName, featuredImage, {
@@ -145,9 +111,7 @@ export default function CertificatesPage() {
       return;
     }
 
-    // Utwórz rekord w bazie danych
     try {
-      // Pobierz maksymalny display_order
       const { data: maxOrderData, error: maxOrderError } = await supabase
         .from('certificates')
         .select('display_order')
@@ -156,13 +120,11 @@ export default function CertificatesPage() {
         .single();
 
       if (maxOrderError && maxOrderError.code !== 'PGRST116') {
-        // PGRST116 oznacza "no rows returned" - to OK jeśli tabela jest pusta
         console.warn('Błąd przy pobieraniu maksymalnego display_order:', maxOrderError.message);
       }
 
       const newOrder = (maxOrderData?.display_order ?? -1) + 1;
 
-      // Utwórz rekord w bazie danych
       const { error: dbError } = await supabase.from('certificates').insert({
         file_name: uploadedImageName,
         display_order: newOrder,
@@ -170,16 +132,12 @@ export default function CertificatesPage() {
 
       if (dbError) {
         console.error('Błąd przy tworzeniu rekordu w bazie:', dbError.message);
-        // Kontynuuj mimo błędu - plik został wgrano do storage
-      } else {
-        console.log('Certyfikat został dodany do bazy danych z display_order:', newOrder);
       }
     } catch (error) {
       console.error('Nieoczekiwany błąd przy tworzeniu rekordu w bazie:', error);
-      // Kontynuuj mimo błędu - plik został wgrano do storage
     }
 
-    await fetchFiles(); // Refresh the table after successful upload
+    await fetchFiles();
     setShowModal(false);
     setFeaturedImage(null);
   };
@@ -194,7 +152,6 @@ export default function CertificatesPage() {
 
   const handleSaveOrder = async (orderedCertificates: Certificate[]) => {
     try {
-      // Przygotuj operacje dla każdego certyfikatu
       const updates: Array<Promise<void>> = [];
 
       for (let i = 0; i < orderedCertificates.length; i++) {
@@ -202,7 +159,6 @@ export default function CertificatesPage() {
         const newOrder = i;
 
         if (cert.db_id) {
-          // Aktualizuj istniejący rekord
           const updatePromise = (async () => {
             const { error } = await supabase
               .from('certificates')
@@ -216,7 +172,6 @@ export default function CertificatesPage() {
 
           updates.push(updatePromise);
         } else {
-          // Utwórz nowy rekord dla certyfikatu bez db_id
           const insertPromise = (async () => {
             const { error, data } = await supabase
               .from('certificates')
@@ -230,7 +185,6 @@ export default function CertificatesPage() {
             if (error) {
               console.error(`Błąd przy tworzeniu rekordu dla ${cert.name}:`, error);
             } else if (data) {
-              // Zaktualizuj lokalny stan z nowym db_id
               cert.db_id = data.id;
             }
           })();
@@ -239,13 +193,10 @@ export default function CertificatesPage() {
         }
       }
 
-      // Wykonaj wszystkie operacje równolegle
       await Promise.all(updates);
 
-      // Odśwież listę certyfikatów z bazy
       await fetchFiles();
 
-      // Zamknij manager kolejności
       setShowOrderManager(false);
     } catch (error) {
       console.error('Błąd przy zapisywaniu kolejności:', error);
