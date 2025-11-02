@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { FaGripVertical, FaTimes } from 'react-icons/fa';
+import { FaGripVertical } from 'react-icons/fa';
 import { Certificate } from '../../utils/supabase/types';
 import './styles.scss';
 

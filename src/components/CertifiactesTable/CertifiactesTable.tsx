@@ -24,7 +24,7 @@ const CertificatesTable = ({ data, onRefresh }: CertificatesTableProps) => {
       // Spróbuj usunąć rekord z bazy danych (może nie istnieć)
       try {
         await supabase.from('certificates').delete().eq('file_name', selectedCertificateName);
-      } catch (error) {
+      } catch {
         // Ignoruj błędy - tabela może nie istnieć jeszcze
         console.warn('Nie można usunąć rekordu z bazy (tabela może nie istnieć)');
       }

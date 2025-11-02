@@ -29,7 +29,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 async function migrateCertificates() {
-  const supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
+  // TypeScript doesn't know that we checked above, so we use non-null assertion
+  const supabase = createSupabaseClient(supabaseUrl!, supabaseAnonKey!);
 
   console.log('Fetching certificates from storage...');
 
