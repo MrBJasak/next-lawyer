@@ -1,6 +1,6 @@
 import { Services } from '../../containers/Services/Services';
 
-import { FaBalanceScale, FaBuilding, FaGavel, FaHandsHelping } from 'react-icons/fa';
+import { FaBalanceScale, FaBuilding, FaGavel, FaHandsHelping, FaHospitalUser } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa6';
 import { GiFamilyTree, GiHandcuffs } from 'react-icons/gi';
 import { GrDocumentLocked, GrUserWorker } from 'react-icons/gr';
@@ -169,6 +169,18 @@ const services = [
       'Wyrok łączny',
     ],
     icon: <GiHandcuffs />,
+  },
+  {
+    id: 13,
+    title: 'Prawo Medyczne',
+    mainDescription: 'Pomoca prawna w zakresie prawa medycznego',
+    details: [
+      'Reprezentacja zawodów medycznych w postępowaniach dyscyplinarnych, karnych i cywilnych',
+      'Obsługa prawna podmiotów leczniczych',
+      'Obsługa prawna branży estetycznej i beauty',
+      'Spory i odpowiedzialność w sprawach błędów medycznych',
+    ],
+    icon: <FaHospitalUser />,
   },
 ];
 
